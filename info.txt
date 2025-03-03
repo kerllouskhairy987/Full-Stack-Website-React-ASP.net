@@ -1,0 +1,27 @@
+/* 🚀🚀 || Start First Commit (SetUp Project) || 🚀🚀 */
+
+1- ✅ Install Vite Project
+
+2- ✅ Install React Query
+
+3- ✅ Install Tailwind CSS
+
+4- ✅ Install Redux Toolkit {
+    - make app folder: {
+        - 1 -- Put provider in main.tsx
+        - 2 -- make store.ts file
+        - 3 -- make counterSlice.ts 
+    }
+}
+
+5- ✅ Install Toast
+
+6- ✅ Install AOS react Library
+
+7- ✅ Install React Router Dom [Install Package Only ...]
+
+7- ✅ Install Axios && make axiosInstance in path ==> [config>axios.config.ts]
+
+7- ✅ Install React Hook Form
+
+/* 🚀🚀 || End First Commit (SetUp Project) || 🚀🚀 */
