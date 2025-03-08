@@ -1,20 +1,33 @@
-import { useEffect } from 'react'
 import './App.css'
 import { Toaster } from 'react-hot-toast'
 
-import AOS from 'aos';
 import 'aos/dist/aos.css';
+import router from './router';
+import { RouterProvider } from 'react-router';
 function App() {
 
-  useEffect(() => {
+
+  return (
+    <>
+      <RouterProvider router={router} />
+      {/* to make toaster can be run Toaster component should be exist */}
+      <Toaster />
+    </>
+  )
+}
+
+export default App
+
+
+/*
+import AOS from 'aos';
+useEffect(() => {
     AOS.init({
       duration: 1200,
       easing: 'ease-in-out-back'
     });
   }, [])
 
-  return (
-    <>
       <div className="item" data-aos="fade-up">1</div>
       <div className="item" data-aos="fade-down">2</div>
       <div className="item" data-aos="fade-right">3</div>
@@ -31,10 +44,4 @@ function App() {
       <div className="item" data-aos="flip-left">11</div>
 
 
-      {/* to make toaster can be run Toaster component should be exist */}
-      <Toaster />
-    </>
-  )
-}
-
-export default App
+*/

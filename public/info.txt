@@ -20,8 +20,18 @@
 
 7- ✅ Install React Router Dom [Install Package Only ...]
 
-7- ✅ Install Axios && make axiosInstance in path ==> [config>axios.config.ts]
+8- ✅ Install Axios && make axiosInstance in path ==> [config>axios.config.ts]
 
-7- ✅ Install React Hook Form
+9- ✅ Install React Hook Form
 
 /* 🚀🚀 || End First Commit (SetUp Project) || 🚀🚀 */
+
+
+
+/* 🚀🚀 || Start 2th Commit (Register Page) || 🚀🚀 */
+
+1- ✅ errors page    (ErrorHandler.tsx) 
+
+2- ✅ page not found (PageNotFound.tsx)
+
+/* 🚀🚀 || End 2th Commit (Register Page) || 🚀🚀 */
