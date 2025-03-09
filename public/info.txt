@@ -1,11 +1,8 @@
 /* 🚀🚀 || Start First Commit (SetUp Project) || 🚀🚀 */
 
 1- ✅ Install Vite Project
-
 2- ✅ Install React Query
-
 3- ✅ Install Tailwind CSS
-
 4- ✅ Install Redux Toolkit {
     - make app folder: {
         - 1 -- Put provider in main.tsx
@@ -13,15 +10,10 @@
         - 3 -- make counterSlice.ts 
     }
 }
-
 5- ✅ Install Toast
-
 6- ✅ Install AOS react Library
-
 7- ✅ Install React Router Dom [Install Package Only ...]
-
 8- ✅ Install Axios && make axiosInstance in path ==> [config>axios.config.ts]
-
 9- ✅ Install React Hook Form
 
 /* 🚀🚀 || End First Commit (SetUp Project) || 🚀🚀 */
@@ -31,7 +23,15 @@
 /* 🚀🚀 || Start 2th Commit (Register Page) || 🚀🚀 */
 
 1- ✅ errors page    (ErrorHandler.tsx) 
-
 2- ✅ page not found (PageNotFound.tsx)
 
 /* 🚀🚀 || End 2th Commit (Register Page) || 🚀🚀 */
+
+
+/* 🚀🚀 || Start 3th Commit (Footer Component) || 🚀🚀 */
+
+1- ✅ made footer component  
+2- ✅ made some changes in router
+3- ✅ made over view on project and do some things on styling && some best practice && some best places like should be ui folder must be in component folder
+
+/* 🚀🚀 || End 3th Commit (Footer Component) || 🚀🚀 */

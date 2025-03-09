@@ -1,23 +1,32 @@
+
+import ProtectedRoute from "../auth/ProtectedRoute";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
 import { createBrowserRouter, createRoutesFromElements, Route } from "react-router";
 import PageNotFound from "../pages/PageNotFound";
 import ErrorHandler from "../errors/ErrorHandler";
+import RootLayout from "../pages/RootLayout";
 
-
-const storageKey = "loggedInUser"
-const userDataString = localStorage.getItem(storageKey);
-const userData = userDataString ? JSON.parse(userDataString) : null;
-console.log("user data from local storage ", userData);
-
+const isAuthenticated = false;
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            {/* Root Layout */}
-            <Route path="/" element={<h3>home page</h3>} errorElement={<ErrorHandler />} >
-
+            <Route path="/" element={<RootLayout />} errorElement={<ErrorHandler />}>
+                <Route path="login" element={
+                    <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/login`}>
+                        <Login />
+                    </ProtectedRoute>
+                }
+                />
+                <Route path="register" element={
+                        <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/register`} >
+                            <Register />
+                        </ProtectedRoute>
+                    }
+                />
             </Route>
 
-            {/* Page Not Found */}
             <Route path="*" element={<PageNotFound />} />
         </>
     )
