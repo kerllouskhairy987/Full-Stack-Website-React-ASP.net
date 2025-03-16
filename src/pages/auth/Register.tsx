@@ -1,76 +1,27 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   FaUser,
   FaEnvelope,
   FaPhoneAlt,
   FaCalendarAlt,
   FaIdCard,
-  FaLock,
-  FaEye,
-  FaEyeSlash,
 } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { NavLink } from "react-router-dom";
 import img from "../../assets/6e9f3830-8eb1-48dd-bf25-cb311bd50b2d.jpg";
 import Button from "../../components/ui/Button";
-
-// Validation Schema
-const validationSchema = yup.object().shape({
-  name: yup.string().required("Name is required"),
-  email: yup
-    .string()
-    .email("Invalid email address")
-    .required("Email is required"),
-  phone: yup
-    .string()
-    .matches(/^\d{10,15}$/, "Mobile number must be between 10 and 15 digits")
-    .required("Mobile number is required"),
-  BirthOD: yup
-    .string()
-    .required("Birthdate is required")
-    .test(
-      "is-valid-date",
-      "Birthdate must be a valid date",
-      (value) => !isNaN(new Date(value || "").getTime())
-    )
-    .test(
-      "is-not-in-future",
-      "Birthdate cannot be in the future",
-      (value) => new Date(value || "") <= new Date()
-    ),
-  national_id: yup
-    .string()
-    .matches(/^\d{14}$/, "National number must be 14 digits")
-    .required("National number is required"),
-  password: yup
-    .string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[0-9]).{8,}$/,
-      "Password must be at least 8 characters long, contain at least one lowercase letter and one number"
-    )
-    .required("Password is required"),
-});
-
-interface RegisterFormValues {
-  name: string;
-  email: string;
-  national_id: string;
-  phone: string;
-  BirthOD: string;
-  password: string;
-}
+import PasswordField from "../../components/ui/PasswordField";
+import InputField from "../../components/ui/InputField";
+import { validationSchemaRegister } from "../../validation/auth";
+import { RegisterFormValues } from "../../interfaces";
 
 const Register = () => {
-  //   const navigate = useNavigate();
-  //   const [registerApi, { isLoading }] = useRegisterMutation();
   const {
-    register,
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormValues>({
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(validationSchemaRegister),
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -79,71 +30,8 @@ const Register = () => {
     console.log("Formatted Data:", data);
   };
 
-  const renderInputField = ( id: string, type: string, label: string, Icon: React.ComponentType<{ className: string }>, errorMessage?: string) => (
-    <div className="relative mb-4 flex flex-col items-start">
-      <label htmlFor={id} className="lableAuthpage">
-        {label}
-      </label>
-      <div className="relative w-full mt-2">
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-          <Icon className="text-gray-500 h-5 w-5" />
-        </span>
-        <input
-          id={id}
-          type={type}
-          className={`w-full pl-10 px-1 py-2 border rounded-lg focus:border-[#031f47] focus:outline-[#031f47] ${
-            errorMessage
-              ? "border-red-500 focus:ring-red-500"
-              : "border-gray-300"
-          }`}
-          {...register(id as keyof RegisterFormValues)}
-        />
-      </div>
-      {errorMessage && (
-        <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
-      )}
-    </div>
-  );
-
-  const renderPasswordField = ( id: string, label: string, isPasswordVisible: boolean, toggleVisibility: () => void, errorMessage?: string ) => (
-    <div className="relative mb-4 space-y-2 flex flex-col items-start">
-      <label htmlFor={id} className="lableAuthpage text-[#031f47]">
-        {label}
-      </label>
-      <div className="relative w-full">
-        <span className="absolute inset-y-0 left-0 flex items-center pl-3 ">
-          <FaLock className="text-gray-500 h-5 w-5" />
-        </span>
-        <input
-          id={id}
-          type={isPasswordVisible ? "text" : "password"}
-          className={`w-full pl-10 pr-10 px-1 py-2 border rounded-lg focus:border-[#031f47] focus:outline-[#031f47] ${
-            errorMessage
-              ? "border-red-500 focus:ring-red-500"
-              : "border-gray-300"
-          }`}
-          {...register(id as keyof RegisterFormValues)}
-        />
-        <span
-          className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
-          onClick={toggleVisibility}
-        >
-          {isPasswordVisible ? (
-            <FaEyeSlash className="text-gray-500 h-5 w-5" />
-          ) : (
-            <FaEye className="text-gray-500 h-5 w-5" />
-          )}
-        </span>
-      </div>
-      {errorMessage && (
-        <p className="text-red-500 text-xs mt-1">{errorMessage}</p>
-      )}
-    </div>
-  );
-
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
-      {/* Left Side */}
       <div className="w-full md:w-1/2 flex justify-center items-center bg-white px-3 py-1">
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -153,49 +41,48 @@ const Register = () => {
             Sign up
           </h2>
           <div className="space-y-2">
-            {renderInputField(
-              "name",
-              "text",
-              "Name",
-              FaUser,
-              errors.name?.message
-            )}
-            {renderInputField(
-              "email",
-              "email",
-              "Email",
-              FaEnvelope,
-              errors.email?.message
-            )}
-            {renderInputField(
-              "phone",
-              "text",
-              "Mobile number",
-              FaPhoneAlt,
-              errors.phone?.message
-            )}
-            {renderInputField(
-              "BirthOD",
-              "date",
-              "Birth date",
-              FaCalendarAlt,
-              errors.BirthOD?.message
-            )}
-            {renderInputField(
-              "national_id",
-              "text",
-              "National number",
-              FaIdCard,
-              errors.national_id?.message
-            )}
-
-            {renderPasswordField(
-              "password",
-              "Password",
-              showPassword,
-              () => setShowPassword(!showPassword),
-              errors.password?.message
-            )}
+            <InputField
+              id="name"
+              type="text"
+              label="Name"
+              errorMessage={errors.name?.message}
+              Icon={FaUser}
+            />
+            <InputField
+              id="email"
+              type="email"
+              label="Email"
+              errorMessage={errors.email?.message}
+              Icon={FaEnvelope}
+            />
+            <InputField
+              id="phone"
+              type="text"
+              label="Mobile number"
+              errorMessage={errors.phone?.message}
+              Icon={FaPhoneAlt}
+            />
+            <InputField
+              id="BirthOD"
+              type="date"
+              label="Birth date"
+              errorMessage={errors.BirthOD?.message}
+              Icon={FaCalendarAlt}
+            />
+            <InputField
+              id="national_id"
+              type="text"
+              label="National number"
+              errorMessage={errors.national_id?.message}
+              Icon={FaIdCard}
+            />
+            <PasswordField
+              id="password"
+              label="Password"
+              isPasswordVisible={showPassword}
+              toggleVisibility={() => setShowPassword(!showPassword)}
+              errorMessage={errors.password?.message}
+            />
           </div>
           <Button type="submit" className="w-full">
             Sign up
@@ -208,8 +95,6 @@ const Register = () => {
           </p>
         </form>
       </div>
-
-      {/* Right Side */}
       <div
         className="hidden md:flex w-1/2 bg-gray-900 text-white justify-center items-center bg-cover bg-center bg-no-repeat relative"
         style={{
@@ -228,5 +113,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;
