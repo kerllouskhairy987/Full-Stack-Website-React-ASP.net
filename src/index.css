@@ -8,6 +8,13 @@ a:hover {
   text-decoration: underline;
 }
 
+ul li a.active {
+  text-decoration: underline;
+  border-start-end-radius: 10px;
+  border: 2px solid gray;
+  box-shadow: 0px 2px 50px gray;
+}
+
 @layer components {
   .container {
     @apply m-auto;

@@ -1,10 +1,11 @@
 import { Outlet } from "react-router"
 import Footer from "../components/Footer"
+import Navbar from "../components/Navbar"
 
 const RootLayout = () => {
     return (
         <>
-            <h1>Root Layout</h1>
+            <Navbar />
             <Outlet />
             <Footer />
         </>

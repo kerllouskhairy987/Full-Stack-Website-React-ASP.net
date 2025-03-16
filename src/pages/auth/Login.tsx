@@ -60,11 +60,10 @@ const Login = () => {
         <input
           id={id}
           type={isPasswordVisible ? "text" : "password"}
-          className={`w-full pl-10 pr-10 px-1 py-2 border rounded-lg  focus:border-[#031f47] focus:outline-[#031f47] ${
-            errorMessage
-              ? "border-red-500 focus:ring-red-500"
-              : "border-gray-300"
-          }`}
+          className={`w-full pl-10 pr-10 px-1 py-2 border rounded-lg  focus:border-[#031f47] focus:outline-[#031f47] ${errorMessage
+            ? "border-red-500 focus:ring-red-500"
+            : "border-gray-300"
+            }`}
           {...register(id as keyof RegisterFormValues)}
         />
         <span
@@ -112,11 +111,10 @@ const Login = () => {
                 <input
                   id="email"
                   type="email"
-                  className={`w-full pl-10 px-1 py-2 border rounded-lg focus:border-[#1a2930] focus:outline-[#1a2930] ${
-                    errors.email
-                      ? "border-red-500 focus:ring-red-500"
-                      : "border-gray-300"
-                  }`}
+                  className={`w-full pl-10 px-1 py-2 border rounded-lg focus:border-[#1a2930] focus:outline-[#1a2930] ${errors.email
+                    ? "border-red-500 focus:ring-red-500"
+                    : "border-gray-300"
+                    }`}
                   {...register("email")}
                 />
               </div>

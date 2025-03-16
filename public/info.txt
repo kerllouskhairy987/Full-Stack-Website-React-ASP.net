@@ -35,3 +35,21 @@
 3- ✅ made over view on project and do some things on styling && some best practice && some best places like should be ui folder must be in component folder
 
 /* 🚀🚀 || End 3th Commit (Footer Component) || 🚀🚀 */
+
+
+
+-- فكرة ال Protected Routing
+لو معايا اكومن مش هعرف اروح ل اللوجن 
+لو مش معايا اكونت مش هعرف اروح ل الريجستر 
+لو مش معايا اكونت مش هعرف اروح ل ال كومتاكت
+
+
+
+/* 🚀🚀 || Start 4th Commit (Navbar Component) || 🚀🚀 */
+
+1- ✅ Responsive Navbar component  
+2- ✅ signDropList Component
+3- ✅ Services Page for testing routing 
+4- ✅ Contact Page for testing routing 
+
+/* 🚀🚀 || End 4th Commit (Navbar Component) || 🚀🚀 */
