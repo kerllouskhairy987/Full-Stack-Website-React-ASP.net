@@ -34,7 +34,7 @@ const router = createBrowserRouter(
                 />
 
                 <Route path="register" element={
-                    <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/login`} >
+                    <ProtectedRoute isAllowed={isAuthenticated} redirectPath={`/login`} >
                         <Register />
                     </ProtectedRoute>
                 }
