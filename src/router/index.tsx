@@ -8,6 +8,8 @@ import ErrorHandler from "../errors/ErrorHandler";
 import RootLayout from "../pages/RootLayout";
 import Services from "../pages/auth/Services";
 import Contact from "../pages/Contact";
+import ForgotPassword from "../pages/ForgotPassword";
+import ResetPassword from "../pages/ResetPassword";
 
 const isAuthenticated = true;
 
@@ -37,6 +39,9 @@ const router = createBrowserRouter(
                     </ProtectedRoute>
                 }
                 />
+
+                <Route path="forgot-password" element={<ForgotPassword />} />
+                <Route path="reset-password" element={<ResetPassword />} />
             </Route>
 
             <Route path="*" element={<PageNotFound />} />

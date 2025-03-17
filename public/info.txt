@@ -53,3 +53,12 @@
 4- ✅ Contact Page for testing routing 
 
 /* 🚀🚀 || End 4th Commit (Navbar Component) || 🚀🚀 */
+
+
+/* 🚀🚀 || Start 5th Commit (Reset password && Forgot password pages) || 🚀🚀 */
+
+1- ✅ reset password page 
+2- ✅ forgot password page
+3- ✅ Handling its routes [to make it easy to navigate between pages]
+
+/* 🚀🚀 || End 5th Commit (Reset password && Forgot password pages) || 🚀🚀 */
