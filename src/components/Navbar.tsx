@@ -6,7 +6,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
   return (
-    <ul className="bg-[#171918] shadow-2xl">
+    <ul className="bg-[#171918] shadow-2xl" >
       <div className="container mx-auto flex items-center justify-between">
         <li className="p-2">
           <NavLink to={"/"}>

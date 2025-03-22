@@ -6,12 +6,12 @@ import { createBrowserRouter, createRoutesFromElements, Route } from "react-rout
 import PageNotFound from "../pages/PageNotFound";
 import ErrorHandler from "../errors/ErrorHandler";
 import RootLayout from "../pages/RootLayout";
-import Services from "../pages/auth/Services";
 import Contact from "../pages/Contact";
 import ForgotPassword from "../pages/ForgotPassword";
 import ResetPassword from "../pages/ResetPassword";
+import Services from "../pages/Services";
 
-const isAuthenticated = true;
+const isAuthenticated = false;
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -27,14 +27,14 @@ const router = createBrowserRouter(
                 } />
 
                 <Route path="login" element={
-                    <ProtectedRoute isAllowed={isAuthenticated} redirectPath={`/register`}>
+                    <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/`}>
                         <Login />
                     </ProtectedRoute>
                 }
                 />
 
                 <Route path="register" element={
-                    <ProtectedRoute isAllowed={isAuthenticated} redirectPath={`/login`} >
+                    <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/login`} >
                         <Register />
                     </ProtectedRoute>
                 }

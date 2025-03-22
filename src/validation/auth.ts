@@ -47,3 +47,17 @@ export const validationSchemaRegister = yup.object().shape({
     .required("Password is required"),
 });
 
+export const emailSchema = yup
+  .object({
+    email: yup.string().required("Invalid email address").email("Invalid email address").matches(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, "Invalid email address example:'email@email.com'")
+  })
+  .required()
+
+export const resetPasswordSchema = yup
+  .object({
+    password: yup.string().required().matches(
+      /^(?=.*[a-z])(?=.*[0-9]).{8,}$/,
+      "Password must be at least 8 characters long, contain at least one lowercase letter and one number"
+    )
+  })
+  .required()

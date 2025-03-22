@@ -31,13 +31,13 @@ const Register = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen">
+    <div className="flex flex-col md:flex-row h-screen">
       <div className="w-full md:w-1/2 flex justify-center items-center bg-white px-3 py-1">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-md space-y-6"
         >
-          <h2 className="text-3xl font-bold text-[#031f47] text-center">
+          <h2 className="text-3xl font-bold text-[#031f47] text-center pt-5">
             Sign up
           </h2>
           <div className="space-y-2">

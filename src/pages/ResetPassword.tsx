@@ -1,6 +1,12 @@
-import { FormEvent, useState } from "react";
+import {  useState } from "react";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import Button from "../components/ui/Button";
+import { useForm } from "react-hook-form"
+import { yupResolver } from "@hookform/resolvers/yup"
+// import * as yup from "yup"
+import { passwordFormValues } from "../interfaces";
+import { resetPasswordSchema } from "../validation/auth";
+import toast from "react-hot-toast";
 
 const ResetPassword = () => {
 
@@ -21,7 +27,7 @@ const ResetPassword = () => {
                         ? "border-red-500 focus:ring-red-500"
                         : "border-gray-300"
                         }`}
-                // {...register(id as keyof RegisterFormValues)}
+                {...register("password")}
                 />
                 <span
                     className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
@@ -40,30 +46,50 @@ const ResetPassword = () => {
         </div>
     );
 
-    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault()
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(resetPasswordSchema),
+    })
+
+    // Handlers
+    const onSubmit = async (data: passwordFormValues) => {
+        console.log(data)
+
+        try {
+            
+            toast.success('Your Password Already Update Login Now', {
+                position: "bottom-center",
+                duration: 1500,
+                style: {
+                    backgroundColor: "green",
+                    color: "white",
+                    width: "fit-content"
+                },
+                
+            });
+
+            setTimeout(() => {
+                location.replace("/login")
+            }, 2000)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
 
     return (
         <div className="p-2">
-            <form action="" className="container mx-auto p-3 my-5 border border-[#031f47] rounded-2xl max-w-[500px] mt-10"
-                onSubmit={(event) => onSubmit(event)}>
+            <form className="container mx-auto p-3 my-5 border border-[#031f47] rounded-2xl max-w-[500px] mt-10" onSubmit={handleSubmit(onSubmit)}>
                 <h2 className="font-semibold text-2xl my-5 text-center">Enter New Password</h2>
                 {renderPasswordField(
                     "password",
                     "Password",
                     showPassword,
                     () => setShowPassword(!showPassword),
-                    //   errors.password?.message
-                )}
-                
-                {renderPasswordField(
-                    "password",
-                    "confirm password",
-                    showPassword,
-                    () => setShowPassword(!showPassword),
-                    //   errors.password?.message
+                    errors.password?.message
                 )}
 
                 <Button type="submit" className="w-full mt-5 active:scale-95 cursor-pointer">submit</Button>

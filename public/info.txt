@@ -62,3 +62,19 @@
 3- ✅ Handling its routes [to make it easy to navigate between pages]
 
 /* 🚀🚀 || End 5th Commit (Reset password && Forgot password pages) || 🚀🚀 */
+
+
+
+address - gender - country 
+
+-- services 
+1- طلب الحصول علي رخصه
+2- تجديد رخصة القياده
+3- بدل فاقد 
+4- رخصه تالفه
+5- فك الحجز
+
+6- رخصة دوليه 
+
+applications  ==> local - international
+users
