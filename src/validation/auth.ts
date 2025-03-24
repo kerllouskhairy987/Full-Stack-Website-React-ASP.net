@@ -13,6 +13,8 @@ export const validationSchemaLogin = yup.object().shape({
 
 export const validationSchemaRegister = yup.object().shape({
   name: yup.string().required("Name is required"),
+  address: yup.string().required("address location is required"),
+  nationality: yup.string().required("nationality is required"),
   email: yup
     .string()
     .email("Invalid email address")

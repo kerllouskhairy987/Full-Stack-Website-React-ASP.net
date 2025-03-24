@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { NavLink } from "react-router-dom";
 import img from "../../assets/6e9f3830-8eb1-48dd-bf25-cb311bd50b2d.jpg";
-import Button from "../../components/ui/Button";
+import Button from "../../components/Button";
 import { LoginFormValues } from "../../interfaces";
 import PasswordField from "../../components/ui/PasswordField";
 import { validationSchemaLogin } from "../../validation/auth";
@@ -29,21 +29,21 @@ const Login = () => {
   return (
     <div className="flex flex-col md:flex-row h-auto md:h-screen w-full">
       {/* Left Side */}
-      <div className="w-full md:w-1/2 flex justify-center items-center bg-white px-3 py-1">
+      <div className="w-full md:w-1/2 flex justify-center items-center px-3 py-1">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full max-w-md space-y-6"
         >
-          <h2 className="text-[#1a2930]  text-[40px] md:text-[60px] mt-10 font-inter font-normal leading-[60px] break-words text-center">
+          <h2 className="dark:text-white text-[#1a2930]  text-[40px] md:text-[60px] mt-10 font-inter font-normal leading-[60px] break-words text-center">
             Welcome Back
           </h2>
 
-          <h2 className="text-3xl font-bold text-[#031f47] text-center">
+          <h2 className="text-3xl font-bold dark:text-white/80 text-[#031f47] text-center">
             Login
           </h2>
           <div className="space-y-2">
             {/* Email Field */}
-            <div className="relative text-[#1a2930] flex flex-col items-start">
+            <div className="dark:text-white/90 relative text-[#1a2930] flex flex-col items-start">
               <label htmlFor="email" className="lableAuthpage">
                 Email
               </label>
@@ -54,11 +54,10 @@ const Login = () => {
                 <input
                   id="email"
                   type="email"
-                  className={`w-full pl-10 px-1 py-2 border rounded-lg focus:border-[#1a2930] focus:outline-[#1a2930] ${
-                    errors.email
+                  className={`w-full pl-10 px-1 py-2 border rounded-lg focus:border-[#1a2930] focus:outline-[#1a2930] ${errors.email
                       ? "border-red-500 focus:ring-red-500"
                       : "border-gray-300"
-                  }`}
+                    }`}
                   {...register("email")}
                 />
               </div>
@@ -81,7 +80,7 @@ const Login = () => {
 
           {/* Remember Me and Forget Password */}
           <div className="flex justify-between items-center ">
-            <label className="flex items-center text-sm text-gray-600 ">
+            <label className="flex items-center text-sm dark:text-white/90 text-gray-600 ">
               <input
                 type="checkbox"
                 className="mr-2  border-gray-300 rounded"
@@ -90,7 +89,7 @@ const Login = () => {
             </label>
             <NavLink
               to="/forgot-password"
-              className="text-[#1a2930] text-sm hover:underline"
+              className="text-[#1a2930] text-sm hover:underline dark:text-white/90"
             >
               Forgot password?
             </NavLink>
@@ -101,7 +100,7 @@ const Login = () => {
           </Button>
           <p className="text-center text-sm text-gray-600">
             Don't have account?{" "}
-            <NavLink to="/register" className="text-[#1a2930] hover:underline">
+            <NavLink to="/register" className="text-[#1a2930] hover:underline dark:text-white/90">
               Sign up
             </NavLink>
           </p>

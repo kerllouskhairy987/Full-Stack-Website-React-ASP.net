@@ -1,5 +1,5 @@
 import { FaFacebookF, FaLinkedin, FaTwitter } from "react-icons/fa"
-import Button from "./ui/Button"
+import Button from "./Button"
 import img from "../assets/6e9f3830-8eb1-48dd-bf25-cb311bd50b2d.jpg";
 
 const Footer = () => {

@@ -2,11 +2,12 @@ import { NavLink } from "react-router";
 import SignDropList from "./SignDropList";
 import { CiBoxList } from "react-icons/ci";
 import { useState } from "react";
+import { ModeToggle } from "./mode-toggle";
 
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
   return (
-    <ul className="bg-[#171918] shadow-2xl" >
+    <ul className="bg-[#171918] shadow-2xl sticky top-0 z-[100]" >
       <div className="container mx-auto flex items-center justify-between">
         <li className="p-2">
           <NavLink to={"/"}>
@@ -42,11 +43,13 @@ const Navbar = () => {
             <li>
               <SignDropList />
             </li>
+
+            <li><ModeToggle /></li>
           </div>
         </div>
 
         {openList && (
-          <div className="sm:hidden absolute top-[56px] bg-[#031F47] shadow-2xl w-full flex flex-col items-center justify-center gap-y-3 p-5 z-1 text-white">
+          <div className="sm:hidden absolute top-[56px] bg-[#031F47] shadow-2xl w-full flex flex-col items-center justify-center gap-y-3 p-5 pb-1 z-1 text-white">
             <li onClick={() => setOpenList(!openList)}>
               <NavLink className={"px-2 py-1"} to={"services"}>
                 Services
@@ -66,6 +69,8 @@ const Navbar = () => {
             <li>
               <SignDropList />
             </li>
+
+            <li><ModeToggle /></li>
           </div>
         )}
       </div>

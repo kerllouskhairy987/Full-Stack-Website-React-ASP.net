@@ -78,3 +78,32 @@ address - gender - country
 
 applications  ==> local - international
 users
+
+
+use (moment library) to get this date and time
+
+
+--- summary --------
+dark mode && light mode
+
+register {
+    1- image
+    2- name
+    3- address
+    4- phone
+    5- location 
+    6- email
+    7- password
+    8- nationality
+    9- birthday  
+}
+
+login {
+    1- email
+    2- password
+}
+
+forgot password
+
+reset password
+

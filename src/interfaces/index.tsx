@@ -1,6 +1,8 @@
 
 export interface RegisterFormValues {
   name: string;
+  address: string;
+  nationality: string;
   email: string;
   national_id: string;
   phone: string;
