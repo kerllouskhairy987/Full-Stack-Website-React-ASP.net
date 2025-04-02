@@ -1,7 +1,7 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
 import { cn } from "../../lib/Utils";
-import { TButton, TWButton } from "../../types";
+import { TButton } from "../../types";
 
 const buttonVariants = cva(
     "rounded-md font-medium text-white duration-300  disabled:cursor-not-allowed flex items-center justify-center",
