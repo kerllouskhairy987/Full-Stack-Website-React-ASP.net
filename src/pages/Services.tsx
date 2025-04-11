@@ -1,6 +1,7 @@
 import local_img from "../assets/local-.jpeg"
 import international_img from "../assets/international-.jpeg"
 import Button from "../components/Button"
+import { Link } from "react-router"
 
 const Services = () => {
     return (
@@ -19,7 +20,9 @@ const Services = () => {
                             <img src={local_img} alt="international license" className="rounded-full w-[250px] h-[250px] mx-auto p-3 animate-none hover:animate-spin" />
                         </a>
                         <h2 className="py-3 text-center font-semibold">Local License</h2>
-                        <Button type="button" className="cursor-pointer block w-full rounded-none">View Details</Button>
+                        <Link to="local">
+                            <Button type="button" className="cursor-pointer block w-full rounded-none">View Details</Button>
+                        </Link>
                     </div>
 
                     <div className="border overflow-hidden w-[400px] rounded-t-[200px] hover:shadow-2xl dark:shadow-blue-400/40">
@@ -27,7 +30,9 @@ const Services = () => {
                             <img src={international_img} alt="international license" className="rounded-full w-[250px] h-[250px] mx-auto p-3 animate-none hover:animate-spin" />
                         </a>
                         <h2 className="py-3 text-center font-semibold">International License</h2>
-                        <Button type="button" className="cursor-pointer block w-full rounded-none">View Details</Button>
+                        <Link to="global">
+                            <Button type="button" className="cursor-pointer block w-full rounded-none">View Details</Button>
+                        </Link>
                     </div>
                 </div>
             </div>
