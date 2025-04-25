@@ -57,7 +57,7 @@ const Button = ({
         >
             {isLoading && (
                 <svg
-                    className="animate-spin h-5 w-5 text-white mr-2"
+                    className="animate-spin h-5 w-5 text-white dark:text-black/90 mr-2"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"

@@ -265,15 +265,16 @@
   resolved "https://registry.npmjs.org/@floating-ui/utils/-/utils-0.2.9.tgz"
   integrity sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg==
 
-"@headlessui/react@^2.2.0":
-  version "2.2.0"
-  resolved "https://registry.npmjs.org/@headlessui/react/-/react-2.2.0.tgz"
-  integrity sha512-RzCEg+LXsuI7mHiSomsu/gBJSjpupm6A1qIZ5sWjd7JhARNlMiSA4kKfJpCKwU9tE+zMRterhhrP74PvfJrpXQ==
+"@headlessui/react@^2.2.2":
+  version "2.2.2"
+  resolved "https://registry.npmjs.org/@headlessui/react/-/react-2.2.2.tgz"
+  integrity sha512-zbniWOYBQ8GHSUIOPY7BbdIn6PzUOq0z41RFrF30HbjsxG6Rrfk+6QulR8Kgf2Vwj2a/rE6i62q5vo+2gI5dJA==
   dependencies:
     "@floating-ui/react" "^0.26.16"
     "@react-aria/focus" "^3.17.1"
     "@react-aria/interactions" "^3.21.3"
-    "@tanstack/react-virtual" "^3.8.1"
+    "@tanstack/react-virtual" "^3.13.6"
+    use-sync-external-store "^1.5.0"
 
 "@heroicons/react@^2.2.0":
   version "2.2.0"
@@ -713,29 +714,29 @@
   dependencies:
     "@typescript-eslint/utils" "^8.18.1"
 
-"@tanstack/query-core@5.66.11":
-  version "5.66.11"
-  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.66.11.tgz"
-  integrity sha512-ZEYxgHUcohj3sHkbRaw0gYwFxjY5O6M3IXOYXEun7E1rqNhsP8fOtqjJTKPZpVHcdIdrmX4lzZctT4+pts0OgA==
+"@tanstack/query-core@5.74.4":
+  version "5.74.4"
+  resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.74.4.tgz"
+  integrity sha512-YuG0A0+3i9b2Gfo9fkmNnkUWh5+5cFhWBN0pJAHkHilTx6A0nv8kepkk4T4GRt4e5ahbtFj2eTtkiPcVU1xO4A==
 
-"@tanstack/react-query@^5.66.11":
-  version "5.66.11"
-  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.66.11.tgz"
-  integrity sha512-uPDiQbZScWkAeihmZ9gAm3wOBA1TmLB1KCB1fJ1hIiEKq3dTT+ja/aYM7wGUD+XiEsY4sDSE7p8VIz/21L2Dow==
+"@tanstack/react-query@^5.74.4":
+  version "5.74.4"
+  resolved "https://registry.npmjs.org/@tanstack/react-query/-/react-query-5.74.4.tgz"
+  integrity sha512-mAbxw60d4ffQ4qmRYfkO1xzRBPUEf/72Dgo3qqea0J66nIKuDTLEqQt0ku++SDFlMGMnB6uKDnEG1xD/TDse4Q==
   dependencies:
-    "@tanstack/query-core" "5.66.11"
+    "@tanstack/query-core" "5.74.4"
 
-"@tanstack/react-virtual@^3.8.1":
-  version "3.13.4"
-  resolved "https://registry.npmjs.org/@tanstack/react-virtual/-/react-virtual-3.13.4.tgz"
-  integrity sha512-jPWC3BXvVLHsMX67NEHpJaZ+/FySoNxFfBEiF4GBc1+/nVwdRm+UcSCYnKP3pXQr0eEsDpXi/PQZhNfJNopH0g==
+"@tanstack/react-virtual@^3.13.6":
+  version "3.13.6"
+  resolved "https://registry.npmjs.org/@tanstack/react-virtual/-/react-virtual-3.13.6.tgz"
+  integrity sha512-WT7nWs8ximoQ0CDx/ngoFP7HbQF9Q2wQe4nh2NB+u2486eX3nZRE40P9g6ccCVq7ZfTSH5gFOuCoVH5DLNS/aA==
   dependencies:
-    "@tanstack/virtual-core" "3.13.4"
+    "@tanstack/virtual-core" "3.13.6"
 
-"@tanstack/virtual-core@3.13.4":
-  version "3.13.4"
-  resolved "https://registry.npmjs.org/@tanstack/virtual-core/-/virtual-core-3.13.4.tgz"
-  integrity sha512-fNGO9fjjSLns87tlcto106enQQLycCKR4DPNpgq3djP5IdcPFdPAmaKjsgzIeRhH7hWrELgW12hYnRthS5kLUw==
+"@tanstack/virtual-core@3.13.6":
+  version "3.13.6"
+  resolved "https://registry.npmjs.org/@tanstack/virtual-core/-/virtual-core-3.13.6.tgz"
+  integrity sha512-cnQUeWnhNP8tJ4WsGcYiX24Gjkc9ALstLbHcBj1t3E7EimN6n6kHH+DPV4PpDnuw00NApQp+ViojMj1GRdwYQg==
 
 "@types/aos@^3.0.7":
   version "3.0.7"
@@ -2167,10 +2168,10 @@ use-sidecar@^1.1.3:
     detect-node-es "^1.1.0"
     tslib "^2.0.0"
 
-use-sync-external-store@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.4.0.tgz"
-  integrity sha512-9WXSPC5fMv61vaupRkCKCxsPxBocVnwakBEkMIHHpkTTg6icbJtg6jzgtLDm4bl3cSHAca52rYWih0k4K3PfHw==
+use-sync-external-store@^1.4.0, use-sync-external-store@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.5.0.tgz"
+  integrity sha512-Rb46I4cGGVBmjamjphe8L/UnvJD+uPPtTkNvX5mZgqdbavhI4EbgIWJiIHXJ8bc/i9EQGPRh4DwEURJ552Do0A==
 
 "vite@^4.2.0 || ^5.0.0 || ^6.0.0", "vite@^5.2.0 || ^6", vite@^6.2.0:
   version "6.2.0"

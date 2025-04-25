@@ -3,6 +3,9 @@ import SignDropList from "./SignDropList";
 import { CiBoxList } from "react-icons/ci";
 import { useState } from "react";
 import { ModeToggle } from "./mode-toggle";
+import Profile from "./Profile";
+import CustomHook from "@/hooks/CustomHook";
+import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
 
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
@@ -11,7 +14,7 @@ const Navbar = () => {
     { to: "/services", text: "Services" },
     { to: "/contact", text: "Contact" },
     { to: "/why-us", text: "Why Us" },
-    { to: "/admin", text: "Admin" }
+    // { to: "/admin", text: "Admin" }
   ];
 
   const renderNavItems = (mobile = false) => (
@@ -26,12 +29,25 @@ const Navbar = () => {
           </NavLink>
         </li>
       ))}
-      <li>
-        <SignDropList />
-      </li>
+      {
+        data?.data[0] === "Admin" && <NavLink
+          className="px-2 py-1 hover:text-blue-300 transition-colors"
+          to={"/admin"}
+        > <li>Admin</li> </NavLink>
+      }
+      {tokenFromLocalStorage ? <li><Profile /></li> : <li> <SignDropList /></li>}
       <li><ModeToggle /></li>
     </>
   );
+
+  const { isLoading, data } = CustomHook({
+    queryKey: ["userRole"], url: `Users/GetRolesNameOfUser/${userIdFromLocalStorage}`, config: {
+      headers: {
+        Authorization: `Bearer ${tokenFromLocalStorage}`
+      }
+    }
+  })
+  console.log("form navbar", isLoading, data?.data[0]);
 
   return (
     <nav className="bg-[#171918] shadow-2xl sticky top-0 z-50">

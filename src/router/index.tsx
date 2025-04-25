@@ -18,6 +18,7 @@ import UsersPage from "../pages/admin/UsersPage";
 import ServecesPage from "../pages/admin/ServecesPage";
 import LocalServices from "@/pages/LocalServices";
 import HomePage from "@/pages/Layout";
+import { userIdFromLocalStorage } from "@/global";
 
 const isAuthenticated = false;
 
@@ -39,32 +40,14 @@ const router = createBrowserRouter(
         <Route
           path="contact"
           element={
-            <ProtectedRoute isAllowed={isAuthenticated} redirectPath={`/login`}>
+            <ProtectedRoute isAllowed={userIdFromLocalStorage} redirectPath={`/login`}>
               <Contact />
             </ProtectedRoute>
           }
         />
 
-        <Route
-          path="login"
-          element={
-            <ProtectedRoute isAllowed={!isAuthenticated} redirectPath={`/`}>
-              <Login />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="register"
-          element={
-            <ProtectedRoute
-              isAllowed={!isAuthenticated}
-              redirectPath={`/login`}
-            >
-              <Register />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
 
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
