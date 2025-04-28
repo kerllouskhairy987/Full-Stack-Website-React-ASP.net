@@ -5,4 +5,6 @@ export type TNameInputLogin = "email" | "password";
 export type TButton = "submit" | "reset" | "button";
 
 export type TWButton = "w-full" | "w-fit";
+export type IappStatus = "Pending" | "Approved" | "Rejected" | "Completed";
+
 

@@ -11,7 +11,6 @@ import { useState } from "react";
 import axiosInstance from "@/config/axios.config";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
-import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);

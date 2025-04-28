@@ -15,10 +15,11 @@ import ResetPassword from "../pages/ResetPassword";
 import Services from "../pages/Services";
 import AdminLayout from "../layout/AdminLayout";
 import UsersPage from "../pages/admin/UsersPage";
-import ServecesPage from "../pages/admin/ServecesPage";
 import LocalServices from "@/pages/LocalServices";
 import HomePage from "@/pages/Layout";
 import { userIdFromLocalStorage } from "@/global";
+import ApplicationsPage from "@/pages/admin/Applications";
+import Applicants from "@/components/Admin/Applicants/Applicants";
 
 const isAuthenticated = false;
 
@@ -71,13 +72,24 @@ const router = createBrowserRouter(
           }
         />
         <Route
-          path="services"
+          path="applications"
           element={
             <ProtectedRoute
               isAllowed={!isAuthenticated}
               redirectPath={`/login`}
             >
-              <ServecesPage />
+              <ApplicationsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="applicant"
+          element={
+            <ProtectedRoute
+              isAllowed={!isAuthenticated}
+              redirectPath={`/login`}
+            >
+              <Applicants />
             </ProtectedRoute>
           }
         />

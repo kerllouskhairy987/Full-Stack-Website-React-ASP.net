@@ -14,8 +14,14 @@ const AdminTabs = () => {
     },
     {
       id: crypto.randomUUID(),
-      title: "serveces",
-      href: "/admin/services",
+      title: "Applications",
+      href: "/admin/applications",
+      exact: false,
+    },
+    {
+      id: crypto.randomUUID(),
+      title: "Applicant",
+      href: "/admin/applicant",
       exact: false,
     },
   ];
@@ -29,7 +35,7 @@ const AdminTabs = () => {
 
   return (
     <div>
-      <nav className="mt-20">
+      <nav className="mt-20 pb-10">
         <ul className="flex items-center flex-wrap gap-4 justify-center">
           {tabs.map((tab) => (
             <li key={tab.id}>
