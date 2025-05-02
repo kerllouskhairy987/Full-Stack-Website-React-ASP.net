@@ -3,8 +3,10 @@ import Button from "../components/Button"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { emailSchema } from "../validation/auth";
-import { emailFormValues } from "../interfaces";
+import { emailFormValues, IErrorResponse } from "../interfaces";
 import toast from "react-hot-toast";
+import axiosInstance from "@/config/axios.config";
+import { AxiosError } from "axios";
 const ForgotPassword = () => {
 
     const {
@@ -15,12 +17,13 @@ const ForgotPassword = () => {
         resolver: yupResolver(emailSchema),
     })
     const onSubmit = async (data: emailFormValues) => {
-        console.log(data)
+        console.log("data from forgot password", data)
 
         try {
+            const {data: dataEmail} = await axiosInstance.post("Account/ForgotPassword", data);
+            console.log(dataEmail?.[0])
 
-
-            toast.success('check your email', {
+            toast.success(`${dataEmail?.[0]}`, {
                 position: "bottom-center",
                 duration: 1500,
                 style: {
@@ -35,16 +38,12 @@ const ForgotPassword = () => {
             }, 2000)
         } catch (error) {
             console.log(error)
-
-            // ${errorObj.response?.data.error.message}
-            toast.error(`invalid email or this email is not registered`, {
+            const errorObj = error as AxiosError<IErrorResponse>
+            const errorMsg = errorObj?.response?.data?.messages?.[0];
+            toast.error(`${errorMsg}`, {
                 position: "bottom-center",
-                duration: 1500,
-                style: {
-                    backgroundColor: "red",
-                    color: "white",
-                    width: "fit-content"
-                },
+                duration: 1500, 
+                style: { backgroundColor: "red", color: "white", width: "fit-content" }
             });
         }
     }

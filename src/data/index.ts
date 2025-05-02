@@ -1,4 +1,4 @@
-import { ILoginInput, IRegisterInput } from "@/interfaces";
+import { ICountry, IGender, ILoginInput, IRegisterInput } from "@/interfaces";
 
 // ** Start Register Input
 export const REGISTER_FORM: IRegisterInput[] = [
@@ -130,7 +130,7 @@ export const REGISTER_FORM: IRegisterInput[] = [
 
 ]
 
-export const REGISTER_COUNTRIES = [
+export const REGISTER_COUNTRIES: ICountry[] = [
     { CountryId: 1, CountryName: "Afghanistan" },
     { CountryId: 2, CountryName: "Albania" },
     { CountryId: 3, CountryName: "Algeria" },
@@ -215,7 +215,7 @@ export const REGISTER_COUNTRIES = [
     { CountryId: 82, CountryName: "Japan" }
 ];
 
-export const REGISTER_GENDER = [
+export const REGISTER_GENDER: IGender[] = [
     { gender: 0, genderType: "Male" },
     { gender: 1, genderType: "Female" },
 ]
@@ -248,3 +248,14 @@ export const LOGIN_FORM: ILoginInput[] = [
     },
 ]
 // ** End Login Input
+
+// Local Licenses Images
+export const licenseImg = [
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqK-b1GlmIVo5FTvXrri57y1RMn0Z5dfVk9Q662qcIzfRqE8-j_CIh88Ftj-2UGRMzpgk&usqp=CAU",
+    "https://shoplineimg.com/60b98856fdff28005bb32b8b/62b2dfa47d57f7000f2b1ff6/800x.jpg?",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdUEIzMOcRxYGlp_1dZqwc4xuAWNdLMsJKUg&s",
+    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjzlofTLjSyclHGbXKzQaH2nUTP2vb3VFVKw&s",
+    "https://www.alke.com/images/stories/articles/0657/1170/agricultural-vehicles-alke.jpg",
+    "https://t4.ftcdn.net/jpg/05/18/18/81/360_F_518188150_pmAWXN0f1Y3Zkl7rH5LqVYuQMXqdZ8I3.jpg",
+    "https://t3.ftcdn.net/jpg/07/09/04/50/360_F_709045068_2JwDtqknRG8XqdE5ajd9oQZgAm6cvVHi.jpg"
+]

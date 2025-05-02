@@ -20,5 +20,3 @@ const CustomHook = ({ queryKey, url, config }: IProps) => {
     )
 }
 export default CustomHook;
-
-//const { isPending, error, data } = 

@@ -14,6 +14,19 @@ export interface IRegisterInput {
     pattern?: RegExp;
   }
 }
+
+// Interface for data of countries
+export interface ICountry {
+  CountryId: number;
+  CountryName: string;
+}
+
+// Interface for data of gender
+export interface IGender {
+  gender: number;
+  genderType: string;
+}
+
 // Interface for data of input login
 export interface ILoginInput {
   label: string;
@@ -50,10 +63,12 @@ export interface IErrorResponse {
     response: {
       data?: {
         messages?: string[];
+        errors?: string[];
       }
     }
   }
   messages?: string[];
+  errors?: string[];
 }
 export interface LoginFormValues {
   email: string;
@@ -69,3 +84,11 @@ export interface passwordFormValues {
   password: string;
 }
 
+export interface ILocalServices {
+  id: number;
+  name: string;
+  description: string;
+  minAge: number;
+  validityPeriod: number;
+  fee: number;
+}

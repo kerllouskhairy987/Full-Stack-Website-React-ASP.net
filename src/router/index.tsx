@@ -20,6 +20,7 @@ import HomePage from "@/pages/Layout";
 import { userIdFromLocalStorage } from "@/global";
 import ApplicationsPage from "@/pages/admin/Applications";
 import Applicants from "@/components/Admin/Applicants/Applicants";
+import InternationalServices from "@/pages/InternationalServices";
 
 const isAuthenticated = false;
 
@@ -35,7 +36,7 @@ const router = createBrowserRouter(
         <Route path="services" >
           <Route index element={<Services />} />
           <Route path="local" element={<LocalServices />} />
-          <Route path="global" element={<h2 className="text-red-600">global services</h2>} />
+          <Route path="global" element={<h2 className="text-red-600"><InternationalServices /></h2>} />
         </Route>
 
         <Route
