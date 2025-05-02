@@ -1,6 +1,6 @@
 import { VariantProps, cva } from "class-variance-authority";
 import { HTMLAttributes, ReactNode } from "react";
-import { TButton, TWButton } from "../types";
+import { TButton } from "../types";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
@@ -51,7 +51,7 @@ const Button = ({
     return (
         <button
             type={type}
-            disabled={isLoading || disabled} // هنا يتم التحكم في الخاصية disabled
+            disabled={isLoading || disabled}
             className={cn(buttonVariants({ variant, size, fullWidth }), className)}
             {...props}
         >
