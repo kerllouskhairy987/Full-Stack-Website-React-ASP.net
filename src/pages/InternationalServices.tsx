@@ -7,6 +7,7 @@ import { IErrorResponse } from "@/interfaces";
 import { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import { SkeletonInternationalServices } from "@/components/Skeleton ";
+import { Link } from "react-router";
 
 const InternationalServices = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -24,6 +25,7 @@ const InternationalServices = () => {
         url: "Applications/GetApplicationTypeById/6",
         config
     });
+    console.log("data from international services", data);
 
     // Fetch applicant info
     const { isLoading: isLoadingApplicant, data: applicantInfo } = CustomHook({
@@ -73,6 +75,16 @@ const InternationalServices = () => {
         return <SkeletonInternationalServices />;
     }
 
+    // If no data
+    if (!data?.value) {
+        return (
+            <div className="container mx-auto p-2 mt-5 sm:mt-10">
+                <h2 className="mb-5 text-red-500 font-semibold text-lg">No services available at the moment. You Must Create Account First</h2>
+                <Link to="/login" className="text-blue-600">
+                    <Button type="button" className="w-full">Login Now</Button>
+                </Link>
+            </div>);
+    }
 
     // Destructure API data
     const { title, description, typeFee } = data?.value || {};

@@ -48,8 +48,16 @@ const router = createBrowserRouter(
           }
         />
 
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route path="login" element={
+          <ProtectedRoute isAllowed={!userIdFromLocalStorage} redirectPath={`/`}>
+            <Login />
+          </ProtectedRoute>
+        } />
+        <Route path="register" element={
+          <ProtectedRoute isAllowed={!userIdFromLocalStorage} redirectPath={`/`}>
+            <Register />
+          </ProtectedRoute>
+        } />
 
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
