@@ -6,7 +6,7 @@ export const ApplicationsApiSlice = createApi({
   reducerPath: "ApplicationsApiSlice",
   tagTypes: ["Applications"],
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://dvldweb.runasp.net",
+    baseUrl: "https://dvldweb.runasp.net",
     prepareHeaders: (headers) => {
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
