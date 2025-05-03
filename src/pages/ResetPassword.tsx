@@ -7,10 +7,20 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { passwordFormValues } from "../interfaces";
 import { resetPasswordSchema } from "../validation/auth";
 import toast from "react-hot-toast";
+import axiosInstance from "@/config/axios.config";
+import { useSearchParams } from "react-router-dom";
 
 const ResetPassword = () => {
-
     const [showPassword, setShowPassword] = useState(false);
+    const [searchParams] = useSearchParams();
+
+    const userId = searchParams.get("userId");
+    const code = searchParams.get("code");
+
+    console.log("userId:", userId);
+    console.log("code:", code);
+
+    // Renders
     const renderPasswordField = (id: string, label: string, isPasswordVisible: boolean, toggleVisibility: () => void, errorMessage?: string) => (
         <div className="relative mb-4 space-y-2 flex flex-col items-start dark:text-white/90">
             <label htmlFor={id} className="lableAuthpage text-[#031f47] dark:text-white/90">
@@ -46,19 +56,26 @@ const ResetPassword = () => {
         </div>
     );
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
+    const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(resetPasswordSchema),
     })
 
     // Handlers
     const onSubmit = async (data: passwordFormValues) => {
-        console.log(data)
+        console.log("data from reset password", data)
 
         try {
+
+            const dataResetPassword = {
+                userId,
+                code,
+                newPassword: data,
+            }
+
+            const { data: dataResetFromAxios } = await axiosInstance.post("Account/ResetPassword", dataResetPassword)
+
+            console.log("dataResetFromAxios", dataResetFromAxios)
+
 
             toast.success('Your Password Already Update Login Now', {
                 position: "bottom-center",
@@ -71,9 +88,9 @@ const ResetPassword = () => {
 
             });
 
-            setTimeout(() => {
-                location.replace("/login")
-            }, 2000)
+            // setTimeout(() => {
+            //     location.replace("/login")
+            // }, 2000)
         } catch (error) {
             console.log(error)
         }
