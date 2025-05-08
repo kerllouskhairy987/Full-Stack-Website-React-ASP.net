@@ -21,9 +21,9 @@ const UserInfo = () => {
     const [selectedGender, setSelectedGender] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isEditable, setIsEditable] = useState(false)
-
+    
     console.log("selectedGender ............", selectedGender)
-
+    
     const navigate = useNavigate();
 
     // Handlers
@@ -79,7 +79,6 @@ const UserInfo = () => {
             setIsLoading(false)
         }
     };
-
 
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
