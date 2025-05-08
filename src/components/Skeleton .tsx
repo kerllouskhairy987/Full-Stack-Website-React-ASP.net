@@ -1,3 +1,6 @@
+import { MdOutlinePending, MdOutlineSmsFailed } from "react-icons/md";
+import { FaDiagramSuccessor } from "react-icons/fa6";
+
 interface IProps {
   count: number;
 }
@@ -43,3 +46,73 @@ export const SkeletonInternationalServices = () => {
     </div>
   );
 }
+
+export const SkeletonUserLicense = () => {
+  return (
+    <div className="mt-5 sm:mt-10">
+      <div className="container px-2 sm:px-0 grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg shadow-sm">
+          <MdOutlinePending className="font-bold text-4xl mx-auto" />
+          <h2 className="text-lg font-semibold">Pending</h2>
+          <div className="h-10 w-1/2 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+
+        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-sm">
+          <FaDiagramSuccessor className="font-bold text-4xl mx-auto" />
+          <h2 className="text-lg font-semibold">Approved</h2>
+          <div className="h-10 w-1/2 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+
+        <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-sm">
+          <MdOutlineSmsFailed className="font-bold text-4xl mx-auto" />
+          <h2 className="text-lg font-semibold">Rejected</h2>
+          <div className="h-10 w-1/2 bg-gray-200 rounded animate-pulse"></div>
+        </div>
+      </div>
+
+      <div className="overflow-x-auto mt-3 sm:mt-5">
+        <table className="min-w-full table-auto border-collapse">
+          <thead className="bg-gray-800 text-white">
+            <tr>
+              <th className="px-4 py-2 text-left">License Class</th>
+              <th className="px-4 py-2 text-left">Application Type</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Fee</th>
+              <th className="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              [...Array(7)].map((_, i) => (
+                <tr key={i} className="border-b animate-pulse">
+                  <td className="px-4 py-2">
+                    <div className="h-4 bg-gray-300 rounded min-w-1/4"></div>
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="h-4 bg-gray-300 rounded min-w-1/4"></div>
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="h-4 bg-gray-300 rounded min-w-[15%]"></div>
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="h-4 bg-gray-300 rounded min-w-[15%]"></div>
+                  </td>
+                  <td className="px-4 py-2">
+                    <div className="h-8 bg-gray-300 rounded min-w-1/5"></div>
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+
+
+
+
+
+

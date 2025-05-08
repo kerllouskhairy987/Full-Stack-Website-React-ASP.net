@@ -1,4 +1,4 @@
-import { ICountry, IGender, ILoginInput, IRegisterInput } from "@/interfaces";
+import { ICountry, IGender, ILoginInput, IRegisterInput, IUpdateUserInput } from "@/interfaces";
 
 // ** Start Register Input
 export const REGISTER_FORM: IRegisterInput[] = [
@@ -258,4 +258,110 @@ export const licenseImg = [
     "https://www.alke.com/images/stories/articles/0657/1170/agricultural-vehicles-alke.jpg",
     "https://t4.ftcdn.net/jpg/05/18/18/81/360_F_518188150_pmAWXN0f1Y3Zkl7rH5LqVYuQMXqdZ8I3.jpg",
     "https://t3.ftcdn.net/jpg/07/09/04/50/360_F_709045068_2JwDtqknRG8XqdE5ajd9oQZgAm6cvVHi.jpg"
+]
+
+// Update User Form
+export const UPDATE_USER_FORM: IUpdateUserInput[] = [
+    {
+        label: "National Number",
+        name: "nationalNo",
+        id: "nationalNo",
+        placeholder: "national number",
+        type: "number",
+        validation: {
+            required: true,
+            minLength: 14,
+            maxLength: 14,
+        }
+    },
+    {
+        label: "First Name",
+        name: "fname",
+        id: "fname",
+        placeholder: "first name",
+        type: "text",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Second Name",
+        name: "sname",
+        id: "sname",
+        placeholder: "second name",
+        type: "text",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Third Name",
+        name: "tname",
+        id: "tname",
+        placeholder: "third name",
+        type: "text",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Last Name",
+        name: "lname",
+        id: "lname",
+        placeholder: "last name",
+        type: "text",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Phone Number",
+        name: "phonenumber",
+        id: "phonenumber",
+        placeholder: "phone number",
+        type: "number",
+        validation: {
+            required: true,
+            minLength: 10,
+        }
+    },
+
+    {
+        label: "Birth Date",
+        name: "birthDate",
+        id: "birthDate",
+        placeholder: "birth date",
+        type: "date",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Address",
+        name: "address",
+        id: "address",
+        placeholder: "address",
+        type: "text",
+        validation: {
+            required: true,
+        }
+    },
+
+    {
+        label: "Email",
+        name: "email",
+        id: "email",
+        placeholder: "email",
+        type: "email",
+        validation: {
+            required: true,
+            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
+        }
+    },
+
 ]

@@ -92,3 +92,27 @@ export interface ILocalServices {
   validityPeriod: number;
   fee: number;
 }
+
+export interface IDataLicense {
+  appId: number;
+  appFee: number;
+  applicationType: string;
+  licenseClass: string;
+  appStatus: string;
+}
+
+
+// Interface for data of input update user
+export interface IUpdateUserInput {
+  label: string;
+  name: TNameInputRegister;
+  id: string;
+  placeholder: string;
+  type: string;
+  validation: {
+    required: boolean;
+    minLength?: number;
+    maxLength?: number;
+    pattern?: RegExp;
+  }
+}

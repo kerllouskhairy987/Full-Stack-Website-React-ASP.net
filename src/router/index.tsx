@@ -21,6 +21,9 @@ import { userIdFromLocalStorage } from "@/global";
 import ApplicationsPage from "@/pages/admin/Applications";
 import Applicants from "@/components/Admin/Applicants/Applicants";
 import InternationalServices from "@/pages/InternationalServices";
+import UserLayout from "@/layout/UserLayout";
+import UserApplicationPage from "@/pages/user/UserApplicationsPage";
+import UserInfo from "@/pages/user/UserInfo";
 
 const isAuthenticated = false;
 
@@ -64,11 +67,7 @@ const router = createBrowserRouter(
       </Route>
 
       {/* Admin Layout */}
-      <Route
-        path="/admin"
-        element={<AdminLayout />}
-        errorElement={<ErrorHandler />}
-      >
+      <Route path="/admin" element={<AdminLayout />} errorElement={<ErrorHandler />} >
         <Route
           index
           element={
@@ -102,6 +101,19 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
+      </Route>
+
+      {/* User Layout */}
+      <Route path="user" element={
+        <ProtectedRoute isAllowed={userIdFromLocalStorage} redirectPath="/login">
+          <UserLayout />
+        </ProtectedRoute>}>
+
+        <Route index element={<UserInfo />} errorElement={<ErrorHandler />}></Route>
+        <Route path="applications" element={<UserApplicationPage />} errorElement={<ErrorHandler />}></Route>
+        <Route path="appointments" element={<h2>appointments</h2>} errorElement={<ErrorHandler />}></Route>
+        <Route path="tests" element={<h2>tests</h2>} errorElement={<ErrorHandler />}></Route>
+
       </Route>
 
       {/* Any Route */}
