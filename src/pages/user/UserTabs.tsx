@@ -7,7 +7,7 @@ const UserTabs = () => {
     const tabs = [
         {
             id: crypto.randomUUID(),
-            title: "Users",
+            title: "Update Users",
             href: "/user",
             exact: true,
         },
@@ -34,7 +34,7 @@ const UserTabs = () => {
 
     return (
         <div>
-            <nav className="mt-20 pb-10">
+            <nav className="mt-20">
                 <ul className="flex items-center flex-wrap gap-4 justify-center">
                     {tabs.map((tab) => (
                         <li key={tab.id}>
@@ -47,7 +47,7 @@ const UserTabs = () => {
                                 end
                             >
                                 <Button
-                                    className="cursor-pointer"
+                                    className="cursor-pointer dark:bg-[#031F47] dark:text-white dark:border-white"
                                     type="button"
                                     variant={
                                         isActiveTab(tab.href, tab.exact) ? "default" : "outline"

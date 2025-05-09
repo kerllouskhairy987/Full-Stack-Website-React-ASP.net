@@ -4,7 +4,6 @@ import toast from "react-hot-toast";
 import CustomHook from "@/hooks/CustomHook";
 import { userIdFromLocalStorage } from "@/global";
 import { Link } from "react-router";
-import Button from "./Button";
 
 const Profile = () => {
     const [isOpenProfile, setIsOpenProfile] = useState(false);

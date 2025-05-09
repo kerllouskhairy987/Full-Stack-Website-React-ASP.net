@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import { ChartUser, ChartUserTwo } from "@/components/charts";
 import { SkeletonUserLicense } from "@/components/Skeleton ";
 import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
 import CustomHook from "@/hooks/CustomHook";
@@ -26,9 +27,9 @@ const UserApplicationPage = () => {
     console.log("data and isLoading LICENSE ......", data, isLoading)
     const dataLicense = data?.value;
 
-    const pendingCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Pending").length;
-    const approvedCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Approved").length;
-    const rejectedCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Rejected").length;
+    const pendingCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Pending").length || 0;
+    const approvedCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Approved").length || 0;
+    const rejectedCount = dataLicense?.filter((app: IDataLicense) => app.appStatus === "Rejected").length || 0;
 
     // Render Status
     const renderStatus = (status: string) => {
@@ -63,23 +64,27 @@ const UserApplicationPage = () => {
 
     return (
         <div className="mt-5 sm:mt-10">
+            <div className="container grid gird-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                <ChartUser />
+                <ChartUserTwo />
+            </div>
             <div className="container px-2 sm:px-0 grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded-lg shadow-sm">
                     <MdOutlinePending className="font-bold text-4xl mx-auto" />
                     <h2 className="text-lg font-semibold">Pending</h2>
-                    <span className="text-3xl font-bold">{pendingCount ? pendingCount : "loading"}</span>
+                    <span className="text-3xl font-bold">{pendingCount ? pendingCount : "0"}</span>
                 </div>
 
                 <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-sm">
                     <FaDiagramSuccessor className="font-bold text-4xl mx-auto" />
                     <h2 className="text-lg font-semibold">Approved</h2>
-                    <span className="text-3xl font-bold">{approvedCount ? approvedCount : "loading"}</span>
+                    <span className="text-3xl font-bold">{approvedCount ? approvedCount : "0"}</span>
                 </div>
 
                 <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg shadow-sm">
                     <MdOutlineSmsFailed className="font-bold text-4xl mx-auto" />
                     <h2 className="text-lg font-semibold">Rejected</h2>
-                    <span className="text-3xl font-bold">{rejectedCount ? rejectedCount : "loading"}</span>
+                    <span className="text-3xl font-bold">{rejectedCount ? rejectedCount : "0"}</span>
                 </div>
             </div>
 
@@ -102,8 +107,15 @@ const UserApplicationPage = () => {
                                 <td className="px-4 py-2">{renderStatus(app.appStatus)}</td>
                                 <td className="px-4 py-2">${app.appFee}</td>
                                 <td className="px-4 py-2">
-                                    <Link to={"tests"}>
-                                        <Button type="button" className="whitespace-nowrap"> Test NOW </Button></Link>
+                                    {/* <Link to={"tests"}>
+                                        <Button type="button" className="whitespace-nowrap"> Test NOW </Button>
+                                    </Link> */}
+                                    <Button onClick={() => {
+                                        location.href = "tests"
+                                        console.log("click", app?.appId)
+                                        localStorage.setItem("appId", `${app?.appId}`);
+                                    }} type="button" className="whitespace-nowrap"> Test NOW </Button>
+
                                 </td>
                             </tr>
                         ))}

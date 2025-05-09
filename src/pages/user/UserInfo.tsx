@@ -113,7 +113,7 @@ const UserInfo = () => {
     }
 
     return (
-        <div className="flex flex-col md:flex-row"> {/* h-screen */}
+        <div className="flex flex-col md:flex-row mt-5 sm:mt-10"> {/* h-screen */}
             <div className="w-full md:w-1/2 flex justify-center items-center px-3 py-1">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
