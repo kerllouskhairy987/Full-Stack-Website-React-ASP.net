@@ -2,18 +2,18 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import img from "../../assets/6e9f3830-8eb1-48dd-bf25-cb311bd50b2d.jpg";
 import Button from "../../components/Button";
 import InputField from "../../components/ui/InputField";
 import { registerSchema } from "../../validation/auth";
 import { IErrorResponse, RegisterFormValues } from "../../interfaces";
-import bgProfile from "../../assets/bg-profile.jpg"
 import { UPDATE_USER_FORM } from "@/data";
 import { FaRegEdit } from "react-icons/fa";
 import axiosInstance from "@/config/axios.config";
 import CountryDropDown, { GenderDropDown } from "@/components/ui/DropDown";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
+import CustomHook from "@/hooks/CustomHook";
+import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
 
 const UserInfo = () => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
@@ -21,9 +21,9 @@ const UserInfo = () => {
     const [selectedGender, setSelectedGender] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const [isEditable, setIsEditable] = useState(false)
-    
+
     console.log("selectedGender ............", selectedGender)
-    
+
     const navigate = useNavigate();
 
     // Handlers
@@ -90,6 +90,28 @@ const UserInfo = () => {
             reader.readAsDataURL(file);
         }
     };
+    // Get applicant id
+    const { data: applicant, isLoading: applicant_loading } = CustomHook({
+        queryKey: ["user_information__"],
+        url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}`,
+        config: {
+            headers: { Authorization: `Bearer ${tokenFromLocalStorage}` }
+        }
+    });
+    console.log("data and isLoading", applicant?.value, applicant_loading)
+
+    // Fetch User Profile Information
+    const applicantId = applicant?.value;
+    const { data } = CustomHook({
+        queryKey: ["userProfile_information"],
+        url: `Applicants/GetUserProfile/${applicantId}`,
+        config: {
+            headers: {
+                Authorization: `Bearer ${tokenFromLocalStorage}`,
+            }
+        }
+    })
+    console.log("data and isLoading", data)
 
     // Renders
     const renderRegisterForm = UPDATE_USER_FORM.map(({ label, name, id, type, placeholder, validation }, index) => (
@@ -101,7 +123,7 @@ const UserInfo = () => {
                 placeholder={placeholder}
                 {...register(name, validation)}
                 errorMessage={errors[name]?.message}
-                // value={name}
+            // value={name}
             />
         </div>
     ))
@@ -114,7 +136,7 @@ const UserInfo = () => {
 
     return (
         <div className="flex flex-col md:flex-row mt-5 sm:mt-10"> {/* h-screen */}
-            <div className="w-full md:w-1/2 flex justify-center items-center px-3 py-1">
+            <div className="w-full mx-auto md:w-1/2 flex justify-center items-center px-3 py-1">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
                     className="w-full max-w-md space-y-6"
@@ -126,7 +148,7 @@ const UserInfo = () => {
                         <label htmlFor="image" className={`block w-[200px] h-[200px] border overflow-hidden mx-auto rounded-[50%!important] relative shadow-md`}>
                             {
                                 imageUrl ? <img src={imageUrl} className="object-fit absolute rounded-full" alt="" /> :
-                                    <img src={bgProfile} className="object-fit absolute rounded-full" alt="" />
+                                    <img src={"https://avatar.iran.liara.run/public/8"} className="object-fit absolute rounded-full" alt="" />
                             }
                             <FaRegEdit className="absolute text-white text-2xl cursor-pointer bottom-6 right-[30px] z-10" />
                             <input id="image" type="file" accept="image/*" className="w-[200px!important] bg-transparent h-[200px!important] block rounded-[50%!important] opacity-0 border mx-auto cursor-pointer" onChange={handleImageUpload} />
@@ -140,21 +162,7 @@ const UserInfo = () => {
                     <Button onClick={handleButtonClick} type={isEditable ? "submit" : "button"} className="w-full" disabled={isLoading} isLoading={isLoading}>
                         {isEditable ? isLoading ? "Updating..." : "submit" : "Update"}
                     </Button>
-
                 </form>
-            </div>
-            <div
-                className="hidden md:flex w-1/2 bg-gray-900 text-white justify-center items-center bg-cover bg-center bg-no-repeat relative"
-                style={{
-                    backgroundImage: `url(${img})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                }}
-            >
-                <div className="absolute inset-0 bg-black/40 bg-opacity-50"></div>
-                <div className="relative text-center">
-                    <h2 className="text-[#b9a76d] text-[80px] lg:text-[120px] font-inter font-extrabold leading-[60px] break-words"> DVLD </h2>
-                </div>
             </div>
         </div>
     );

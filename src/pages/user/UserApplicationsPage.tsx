@@ -7,12 +7,15 @@ import { IDataLicense } from "@/interfaces";
 import { FaDiagramSuccessor } from "react-icons/fa6";
 import { MdOutlinePending, MdOutlineSmsFailed } from "react-icons/md";
 import { Link } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const UserApplicationPage = () => {
     // Get Applicant
-    const { data: applicant, isLoading: applicant_loading } = CustomHook({ queryKey: ["user_information"], url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}` })
+    const { data: applicant, isLoading: applicant_loading } = CustomHook({ queryKey: ["user_information__"], url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}`, config: { headers: { Authorization: `Bearer ${tokenFromLocalStorage}` } } });
     console.log("data and isLoading", applicant?.value, applicant_loading)
     const applicantId = applicant?.value;
+    console.log("applicantId ...................", applicantId)
+    console.log("applicant ...............", applicant);
 
     // Get Licenses By Applicant
     const { data, isLoading } = CustomHook({
@@ -107,15 +110,11 @@ const UserApplicationPage = () => {
                                 <td className="px-4 py-2">{renderStatus(app.appStatus)}</td>
                                 <td className="px-4 py-2">${app.appFee}</td>
                                 <td className="px-4 py-2">
-                                    {/* <Link to={"tests"}>
-                                        <Button type="button" className="whitespace-nowrap"> Test NOW </Button>
-                                    </Link> */}
-                                    <Button onClick={() => {
-                                        location.href = "tests"
-                                        console.log("click", app?.appId)
-                                        localStorage.setItem("appId", `${app?.appId}`);
-                                    }} type="button" className="whitespace-nowrap"> Test NOW </Button>
-
+                                    <NavLink to={"tests"} className="whitespace-nowrap">
+                                        <Button onClick={() => {
+                                            localStorage.setItem("appId", `${app?.appId}`);
+                                        }} type="button" className="whitespace-nowrap"> Test NOW </Button>
+                                    </NavLink>
                                 </td>
                             </tr>
                         ))}

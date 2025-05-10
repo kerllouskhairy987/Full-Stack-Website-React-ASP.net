@@ -25,6 +25,7 @@ import UserLayout from "@/layout/UserLayout";
 import UserApplicationPage from "@/pages/user/UserApplicationsPage";
 import UserInfo from "@/pages/user/UserInfo";
 import TestsPage from "@/pages/user/TestsPage";
+import AppointmentPage from "@/pages/user/AppointmentPage";
 
 const isAuthenticated = false;
 
@@ -112,9 +113,9 @@ const router = createBrowserRouter(
 
         <Route index element={<UserInfo />} errorElement={<ErrorHandler />}></Route>
         <Route path="applications" element={<UserApplicationPage />} errorElement={<ErrorHandler />}></Route>
-        <Route path="appointments" element={<h2>appointments</h2>} errorElement={<ErrorHandler />}></Route>
+        <Route path="appointments" element={<AppointmentPage />} errorElement={<ErrorHandler />}></Route>
 
-        <Route path="tests" element={<TestsPage />} errorElement={<ErrorHandler />}></Route>
+        <Route path="applications/tests" element={<TestsPage />} errorElement={<ErrorHandler />}></Route>
       </Route>
 
       {/* Any Route */}

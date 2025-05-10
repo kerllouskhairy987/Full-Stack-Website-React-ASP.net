@@ -261,6 +261,7 @@ export const licenseImg = [
 ]
 
 // Update User Form
+
 export const UPDATE_USER_FORM: IUpdateUserInput[] = [
     {
         label: "National Number",

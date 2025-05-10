@@ -3,11 +3,12 @@ import axiosInstance from "@/config/axios.config"
 import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global"
 import CustomHook from "@/hooks/CustomHook"
 import { IErrorResponse } from "@/interfaces"
+import { AlertError, AlertSuccess } from "@/lib"
 import { AxiosError } from "axios"
-import toast from "react-hot-toast"
 
 const PracticalTest = () => {
     const appIdFromLocal = Number(localStorage.getItem("appId"));
+    console.log("appIdFromLocal     ..... ,,,,,,,,,,,,,,,", appIdFromLocal)
     // for fetch the nameUser of user
     const { data } = CustomHook({
         queryKey: ["userNameVision"], url: `Applicants/GetApplicantByUserId/${userIdFromLocalStorage}`, config: {
@@ -17,34 +18,42 @@ const PracticalTest = () => {
         }
     })
     const applicantId = data?.value?.applicantId
+    console.log("aaplicantId", applicantId)
 
     // send data about vision test
     const handleVisionTestSubmit = async () => {
         if (!applicantId) return;
 
         try {
-            const res = await axiosInstance.post(`Applications/SchedulePracticalTest?appId=${appIdFromLocal}&applicantId=${applicantId}`, null, {
+            const res = await axiosInstance.post(`Tests/SchedulePracticalTest?appId=${appIdFromLocal}&applicantId=${applicantId}`, null, {
                 headers: {
                     Authorization: `Bearer ${tokenFromLocalStorage}`,
                 }
             });
             console.log("Response from Vision Test:", res?.data);
-            toast.success('Successfully Applied for vision test!',
-                {
-                    duration: 1500,
-                    position: 'bottom-center',
-                    style: { backgroundColor: "green", color: "white", width: "fit-content" },
+
+            // fetch the test results
+            const ID = res?.data?.value;
+            const response = await axiosInstance.get(`Tests/${ID}`, {
+                headers: {
+                    Authorization: `Bearer ${tokenFromLocalStorage}`,
                 }
-            );
+            })
+            console.log("Response from practical test: ????????? ", response?.data);
+            const dataTestResult = response?.data?.value;
+
+            AlertSuccess({
+                title: "Successfully Applied for vision test!", html: `
+                        <p><strong>Test Type:</strong> ${dataTestResult.testType}</p>
+                        <p><strong>Fee Paid:</strong> ${dataTestResult.paidFee} EGP</p>
+                        <p><strong>Appointment:</strong> ${new Date(dataTestResult.appointmentDate).toLocaleString()}</p>
+                `})
         } catch (error) {
             const errorObj = error as AxiosError<IErrorResponse>;
-            toast.error(`${errorObj?.response?.data?.errors?.[0]}`,
-                {
-                    duration: 1500,
-                    position: 'bottom-center',
-                    style: { backgroundColor: "red", color: "white", width: "fit-content" },
-                }
-            );
+            AlertError({
+                title: "Error",
+                text: `${errorObj?.response?.data?.errors?.[0]}`,
+            })
         }
     }
 

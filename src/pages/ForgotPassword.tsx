@@ -33,9 +33,6 @@ const ForgotPassword = () => {
                 },
             });
 
-            setTimeout(() => {
-                location.replace("/reset-password")
-            }, 2000)
         } catch (error) {
             console.log(error)
             const errorObj = error as AxiosError<IErrorResponse>
@@ -77,12 +74,7 @@ const ForgotPassword = () => {
                     </p>
                 )}
 
-
-                <Button type="submit" className="border cursor-pointer active:scale-95 mt-4 w-full">
-                    {/* <Link className="w-full" to={"/reset-password"}>  */}
-                    Reset
-                    {/* </Link> */}
-                </Button>
+                <Button type="submit" className="border cursor-pointer active:scale-95 mt-4 w-full"> Reset </Button>
             </div>
 
         </form>

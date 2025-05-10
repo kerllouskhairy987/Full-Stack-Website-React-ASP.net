@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import ImgProfile from "../assets/bg-profile.jpg";
 import toast from "react-hot-toast";
 import CustomHook from "@/hooks/CustomHook";
 import { userIdFromLocalStorage } from "@/global";
@@ -65,7 +64,7 @@ const Profile = () => {
                 onClick={handleProfile}
             >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full cursor-pointer" src={ImgProfile} alt="user photo" />
+                <img className="w-8 h-8 rounded-full cursor-pointer" src={"https://avatar.iran.liara.run/public/8"} alt="user photo" />
             </button>
 
             {isOpenProfile && <div id="dropdownAvatar" className="z-[10000] absolute left-1/2 -translate-x-1/2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">

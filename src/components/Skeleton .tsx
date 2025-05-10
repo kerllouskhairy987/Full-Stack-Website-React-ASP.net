@@ -111,7 +111,34 @@ export const SkeletonUserLicense = () => {
 }
 
 
-
+export const SkeletonUserTests = () => {
+  return (
+    <div className="overflow-x-auto mt-3 sm:mt-5" >
+      <table className="min-w-full table-auto border-collapse">
+        <thead className="bg-gray-800 text-white">
+          <tr>
+            <th className="px-4 py-2 text-left">Applicant Name</th>
+            <th className="px-4 py-2 text-left">Test Type</th>
+            <th className="px-4 py-2 text-left">Appointment</th>
+            <th className="px-4 py-2 text-left">Fee</th>
+            <th className="px-4 py-2 text-left">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {[...Array(10)].map((_, index) => (
+            <tr key={index} className="border-b animate-pulse">
+              {[...Array(5)].map((_, i) => (
+                <td key={i} className="px-4 py-2">
+                  <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div >
+  )
+}
 
 
 

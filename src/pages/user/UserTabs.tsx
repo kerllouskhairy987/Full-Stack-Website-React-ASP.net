@@ -7,7 +7,7 @@ const UserTabs = () => {
     const tabs = [
         {
             id: crypto.randomUUID(),
-            title: "Update Users",
+            title: "User Profile",
             href: "/user",
             exact: true,
         },

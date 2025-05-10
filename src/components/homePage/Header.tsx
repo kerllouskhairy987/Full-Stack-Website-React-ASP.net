@@ -10,7 +10,7 @@ const HeaderSec = () => {
                 <Link to="services">
                     <button className="mt-10 bg-[#031F47!important] py-3 px-5 font-semibold active:scale-95 block mx-auto rounded cursor-pointer text-white"
                     type="button"
-                    >Book now</button>
+                    >Try now</button>
                 </Link>
             </div>
         </div>
