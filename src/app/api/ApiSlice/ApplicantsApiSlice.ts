@@ -16,7 +16,7 @@ export const ApplicantsApiSlice = createApi({
   }),
   endpoints: (builder) => ({
     getApplicants: builder.query({
-      query: () => `/api/Applications`,
+      query: () => `/api/Applicants/GetAllApplicants`,
       providesTags: ["Applicats"],
     }),
     deleteApplicant: builder.mutation({
@@ -26,9 +26,8 @@ export const ApplicantsApiSlice = createApi({
       }),
       invalidatesTags: ["Applicats"],
     }),
+  }),
+});
 
-
-  })
-})
-
-export const { useGetApplicantsQuery, useDeleteApplicantMutation } = ApplicantsApiSlice
+export const { useGetApplicantsQuery, useDeleteApplicantMutation } =
+  ApplicantsApiSlice;

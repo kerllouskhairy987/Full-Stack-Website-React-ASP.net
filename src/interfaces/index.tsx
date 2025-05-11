@@ -12,7 +12,7 @@ export interface IRegisterInput {
     minLength?: number;
     maxLength?: number;
     pattern?: RegExp;
-  }
+  };
 }
 
 // Interface for data of countries
@@ -37,9 +37,8 @@ export interface ILoginInput {
   validation: {
     required: boolean;
     pattern?: RegExp;
-  }
+  };
 }
-
 
 // Interface for Input Register
 export interface RegisterFormValues {
@@ -54,7 +53,6 @@ export interface RegisterFormValues {
   email: string;
   password: string;
   confirmPassword: string;
-
 }
 
 // interface for error response
@@ -64,9 +62,9 @@ export interface IErrorResponse {
       data?: {
         messages?: string[];
         errors?: string[];
-      }
-    }
-  }
+      };
+    };
+  };
   messages?: string[];
   errors?: string[];
 }
@@ -78,7 +76,6 @@ export interface LoginFormValues {
 export interface emailFormValues {
   email: string;
 }
-
 
 export interface passwordFormValues {
   password: string;
@@ -101,7 +98,6 @@ export interface IDataLicense {
   appStatus: string;
 }
 
-
 // Interface for data of input update user
 export interface IUpdateUserInput {
   label: string;
@@ -114,5 +110,15 @@ export interface IUpdateUserInput {
     minLength?: number;
     maxLength?: number;
     pattern?: RegExp;
-  }
+  };
+}
+
+export interface Tests {
+  appointmentId: number;
+  appointmentDate: string;
+  paidFee: number;
+  isLooked: boolean;
+  testType: "VisionTest" | string;
+  applicantName: string;
+  applicantNationalNo: string;
 }

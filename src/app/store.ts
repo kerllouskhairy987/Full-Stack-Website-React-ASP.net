@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApplicationsApiSlice } from "./api/ApiSlice/Applications";
 import { ApiUserSlice } from "./api/ApiUsers/ApiUserSlice";
 import { ApplicantsApiSlice } from "./api/ApiSlice/ApplicantsApiSlice";
+import { TestsApiSlice } from "./api/ApiSlice/TestsApiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     [ApplicationsApiSlice.reducerPath]: ApplicationsApiSlice.reducer,
     [ApiUserSlice.reducerPath]: ApiUserSlice.reducer,
     [ApplicantsApiSlice.reducerPath]: ApplicantsApiSlice.reducer,
+    [TestsApiSlice.reducerPath]: TestsApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -18,7 +20,8 @@ export const store = configureStore({
     }).concat(
       ApplicationsApiSlice.middleware,
       ApiUserSlice.middleware,
-      ApplicantsApiSlice.middleware
+      ApplicantsApiSlice.middleware,
+      TestsApiSlice.middleware
     ),
 });
 

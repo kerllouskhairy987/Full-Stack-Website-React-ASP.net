@@ -26,6 +26,7 @@ import UserApplicationPage from "@/pages/user/UserApplicationsPage";
 import UserInfo from "@/pages/user/UserInfo";
 import TestsPage from "@/pages/user/TestsPage";
 import AppointmentPage from "@/pages/user/AppointmentPage";
+import TestPage from "@/components/Admin/Tests/TestPage";
 
 const isAuthenticated = false;
 
@@ -100,6 +101,17 @@ const router = createBrowserRouter(
               redirectPath={`/login`}
             >
               <Applicants />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="tests"
+          element={
+            <ProtectedRoute
+              isAllowed={!isAuthenticated}
+              redirectPath={`/login`}
+            >
+              <TestPage />
             </ProtectedRoute>
           }
         />

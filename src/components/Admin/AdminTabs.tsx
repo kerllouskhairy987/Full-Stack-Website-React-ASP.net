@@ -24,6 +24,12 @@ const AdminTabs = () => {
       href: "/admin/applicant",
       exact: false,
     },
+    {
+      id: crypto.randomUUID(),
+      title: "Tests",
+      href: "/admin/tests",
+      exact: false,
+    },
   ];
 
   const isActiveTab = (href: string, exact: boolean) => {
