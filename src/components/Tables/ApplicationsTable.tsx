@@ -7,6 +7,8 @@ import {
 } from "@/app/api/ApiSlice/Applications";
 import toast from "react-hot-toast";
 import { IappStatus } from "@/types";
+import { useState } from "react";
+
 interface DrivingLicenseApplication {
   appId: number;
   applicationType: string;
@@ -23,17 +25,19 @@ const ApplicationsTable = ({
 }: {
   applications: DrivingLicenseApplication[];
 }) => {
-  const [acceptApplication, { isLoading: isLoadingAccept }] =
-    useAcceptApplicationMutation();
-  const [rejectApplication, { isLoading: isLoadingReject }] =
-    useRejectApplicationMutation();
-  const [deleteApplication, { isLoading: isLoadingDelete }] =
-    useDeleteApplicationMutation();
+  // حالة تحميل لكل زر في كل صف
+  const [loadingStates, setLoadingStates] = useState<
+    Record<number, "accept" | "reject" | "delete" | null>
+  >({});
+
+  const [acceptApplication] = useAcceptApplicationMutation();
+  const [rejectApplication] = useRejectApplicationMutation();
+  const [deleteApplication] = useDeleteApplicationMutation();
 
   const handleAccept = async (id: number) => {
     try {
-      const res = await acceptApplication(id).unwrap();
-      console.log(res);
+      setLoadingStates((prev) => ({ ...prev, [id]: "accept" }));
+      await acceptApplication(id).unwrap();
       toast.success("Successfully Accepted!", {
         duration: 1500,
         position: "bottom-center",
@@ -44,13 +48,16 @@ const ApplicationsTable = ({
         },
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Failed to Accept!");
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [id]: null }));
     }
   };
 
   const handleReject = async (id: number) => {
     try {
+      setLoadingStates((prev) => ({ ...prev, [id]: "reject" }));
       await rejectApplication(id).unwrap();
       toast.success("Successfully Rejected!", {
         duration: 1500,
@@ -62,15 +69,17 @@ const ApplicationsTable = ({
         },
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Failed to Reject!");
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [id]: null }));
     }
   };
 
   const handleDelete = async (id: number) => {
     try {
-      const res = await deleteApplication(id).unwrap();
-      console.log(res);
+      setLoadingStates((prev) => ({ ...prev, [id]: "delete" }));
+      await deleteApplication(id).unwrap();
       toast.success("Successfully Deleted!", {
         duration: 1500,
         position: "bottom-center",
@@ -81,8 +90,10 @@ const ApplicationsTable = ({
         },
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
       toast.error("Failed to Delete!");
+    } finally {
+      setLoadingStates((prev) => ({ ...prev, [id]: null }));
     }
   };
 
@@ -134,28 +145,29 @@ const ApplicationsTable = ({
                 <div className="flex flex-col gap-2">
                   {app.appStatus === "Pending" && (
                     <div className="flex gap-2">
-                      <Button
-                        onClick={() => handleAccept(app.appId)}
-                        disabled={isLoadingAccept}
-                      >
-                        {isLoadingAccept ? "Accepting..." : "Accept"}
+                      <Button onClick={() => handleAccept(app.appId)}>
+                        {loadingStates[app.appId] === "accept"
+                          ? "Accepting..."
+                          : "Accept"}
                       </Button>
                       <Button
                         onClick={() => handleReject(app.appId)}
-                        disabled={isLoadingReject}
                         className="bg-yellow-500 hover:bg-yellow-600"
                       >
-                        {isLoadingReject ? "Rejecting..." : "Reject"}
+                        {loadingStates[app.appId] === "reject"
+                          ? "Rejecting..."
+                          : "Reject"}
                       </Button>
                     </div>
                   )}
                   <Button
                     onClick={() => handleDelete(app.appId)}
-                    disabled={isLoadingDelete}
                     className="bg-red-600 hover:bg-red-700"
                   >
                     <Trash className="mr-2" />
-                    {isLoadingDelete ? "Deleting..." : "Delete"}
+                    {loadingStates[app.appId] === "delete"
+                      ? "Deleting..."
+                      : "Delete"}
                   </Button>
                 </div>
               </td>

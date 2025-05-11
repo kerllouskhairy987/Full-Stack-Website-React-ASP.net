@@ -9,7 +9,6 @@ import InputField from "../ui/InputField";
 import { useEffect, useState } from "react";
 import { IappStatus } from "@/types";
 
-
 export type IApplicant = {
   appId: number;
   applicationType: string;
@@ -23,9 +22,10 @@ export type IApplicant = {
 
 const ApplicantsTable = () => {
   const { data, isLoading, isError } = useGetApplicantsQuery({});
-  const [deleteApplicant, { isLoading: isDeleting }] =
-    useDeleteApplicantMutation();
+  const [deleteApplicant] = useDeleteApplicantMutation();
   const [searchResults, setSearchResults] = useState<IApplicant[]>([]);
+  const [deletingIds, setDeletingIds] = useState<number[]>([]); // حالة لتتبع الأزرار التي يتم حذفها
+
   useEffect(() => {
     if (data && Array.isArray(data.value)) {
       setSearchResults(data.value);
@@ -34,6 +34,7 @@ const ApplicantsTable = () => {
 
   const handleDelete = async (id: number) => {
     try {
+      setDeletingIds((prev) => [...prev, id]); // إضافة ID إلى حالة الحذف
       console.log(`Deleting applicant with ID: ${id}`);
       await deleteApplicant(id).unwrap();
       toast.success("Successfully Deleted!", {
@@ -48,6 +49,8 @@ const ApplicantsTable = () => {
     } catch (error) {
       console.error(error);
       toast.error("Failed to Delete!");
+    } finally {
+      setDeletingIds((prev) => prev.filter((item) => item !== id)); // إزالة ID من حالة الحذف
     }
   };
 
@@ -73,6 +76,7 @@ const ApplicantsTable = () => {
   if (isError) {
     return <div>Error fetching applicants.</div>;
   }
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     if (data && Array.isArray(data.value)) {
@@ -113,34 +117,37 @@ const ApplicantsTable = () => {
         </thead>
         <tbody>
           {searchResults && data.value.length > 0 ? (
-            searchResults.map((applicant: IApplicant) => (
-              <tr key={applicant.appId} className="border-b">
-                <td className="px-4 py-2">{applicant.appId}</td>
-                <td className="px-4 py-2">{applicant.applicantName}</td>
-                <td className="px-4 py-2">{applicant.nationalNumber}</td>
-                <td className="px-4 py-2">{applicant.licenseClass}</td>
-                <td className="px-4 py-2">{applicant.applicationType}</td>
-                <td className="px-4 py-2">
-                  {new Date(applicant.appDate).toLocaleDateString()}
-                </td>
-                <td className="px-4 py-2">
-                  {renderStatus(applicant.appStatus)}
-                </td>
-                <td className="px-4 py-2">${applicant.appFee}</td>
-                <td className="px-4 py-2">
-                  <div className="flex flex-col gap-2">
-                    <Button
-                      disabled={isDeleting}
-                      onClick={() => handleDelete(applicant.appId)}
-                      className="bg-red-600 hover:bg-red-700"
-                    >
-                      <Trash className="mr-2" />
-                      {isDeleting ? "Deleting..." : "Delete"}
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            ))
+            searchResults.map((applicant: IApplicant) => {
+              const isDeleting = deletingIds.includes(applicant.appId);
+              return (
+                <tr key={applicant.appId} className="border-b">
+                  <td className="px-4 py-2">{applicant.appId}</td>
+                  <td className="px-4 py-2">{applicant.applicantName}</td>
+                  <td className="px-4 py-2">{applicant.nationalNumber}</td>
+                  <td className="px-4 py-2">{applicant.licenseClass}</td>
+                  <td className="px-4 py-2">{applicant.applicationType}</td>
+                  <td className="px-4 py-2">
+                    {new Date(applicant.appDate).toLocaleDateString()}
+                  </td>
+                  <td className="px-4 py-2">
+                    {renderStatus(applicant.appStatus)}
+                  </td>
+                  <td className="px-4 py-2">${applicant.appFee}</td>
+                  <td className="px-4 py-2">
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        disabled={isDeleting}
+                        onClick={() => handleDelete(applicant.appId)}
+                        className="bg-red-600 hover:bg-red-700"
+                      >
+                        <Trash className="mr-2" />
+                        {isDeleting ? "Deleting..." : "Delete"}
+                      </Button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })
           ) : (
             <tr>
               <td colSpan={9} className="text-center py-6 text-gray-500">
