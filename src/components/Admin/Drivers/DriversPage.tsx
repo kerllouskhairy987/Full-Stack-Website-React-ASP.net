@@ -16,23 +16,22 @@ export default function DriversPage() {
 
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">السائقين</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-800 text-white">
             <tr>
               <th className="px-4 py-2 text-left">#</th>
-              <th className="px-4 py-2 text-left">الاسم بالكامل</th>
-              <th className="px-4 py-2 text-left">الرقم القومي</th>
-              <th className="px-4 py-2 text-left">تاريخ الميلاد</th>
-              <th className="px-4 py-2 text-left">النوع</th>
-              <th className="px-4 py-2 text-left">العنوان</th>
-              <th className="px-4 py-2 text-left">الدولة</th>
+              <th className="px-4 py-2 text-left">Full Name</th>
+              <th className="px-4 py-2 text-left">National ID</th>
+              <th className="px-4 py-2 text-left">Date of Birth</th>
+              <th className="px-4 py-2 text-left">Gender</th>
+              <th className="px-4 py-2 text-left">Address</th>
+              <th className="px-4 py-2 text-left">Country</th>
             </tr>
           </thead>
           <tbody>
             {data.value.map((driver: Driver, index: number) => (
-              <tr key={driver.applicantId} >
+              <tr key={driver.applicantId}>
                 <td className="p-2 border">{index + 1}</td>
                 <td className="p-2 border">{driver.fullName}</td>
                 <td className="p-2 border">{driver.nationalNo}</td>
@@ -40,7 +39,7 @@ export default function DriversPage() {
                   {new Date(driver.birthDate).toLocaleDateString()}
                 </td>
                 <td className="p-2 border">
-                  {driver.gender === 0 ? "ذكر" : "أنثى"}
+                  {driver.gender === 0 ? "male" : "female"}
                 </td>
                 <td className="p-2 border">{driver.address}</td>
                 <td className="p-2 border">{driver.countryId}</td>

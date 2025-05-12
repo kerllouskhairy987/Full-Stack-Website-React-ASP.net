@@ -6,6 +6,7 @@ import { ApiUserSlice } from "./api/ApiUsers/ApiUserSlice";
 import { ApplicantsApiSlice } from "./api/ApiSlice/ApplicantsApiSlice";
 import { TestsApiSlice } from "./api/ApiSlice/TestsApiSlice";
 import { DriversApiSlice } from "./api/ApiSlice/DriversApiSlice";
+import { LicenseApiSlice } from "./api/ApiSlice/LicenseApiSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     [ApplicantsApiSlice.reducerPath]: ApplicantsApiSlice.reducer,
     [TestsApiSlice.reducerPath]: TestsApiSlice.reducer,
     [DriversApiSlice.reducerPath]: DriversApiSlice.reducer,
+    [LicenseApiSlice.reducerPath]: LicenseApiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -24,7 +26,8 @@ export const store = configureStore({
       ApiUserSlice.middleware,
       ApplicantsApiSlice.middleware,
       TestsApiSlice.middleware,
-      DriversApiSlice.middleware
+      DriversApiSlice.middleware,
+      LicenseApiSlice.middleware
     ),
 });
 

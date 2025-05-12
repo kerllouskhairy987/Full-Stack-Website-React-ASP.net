@@ -19,6 +19,7 @@ export const DriversApiSlice = createApi({
       query: () => "/Api/Drivers",
       providesTags: ["Drivers"],
     }),
+    
   }),
 });
 

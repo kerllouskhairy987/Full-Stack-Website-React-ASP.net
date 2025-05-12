@@ -40,14 +40,58 @@ export const ApplicationsApiSlice = createApi({
       }),
       invalidatesTags: ["Applications"],
     }),
-    createLicense : builder.mutation({
-      query: ({data}) => ({
+    createLicense: builder.mutation({
+      query: ({ data }) => ({
         url: `/Api/Licenses/IssueLicenseFirstTime`,
         method: "POST",
-        body: data
+        body: data,
       }),
       invalidatesTags: ["Applications"],
-    })
+    }),
+    createLicenseInternational: builder.mutation({
+      query: ({ data }) => ({
+        url: `/Api/Licenses/IssueInternationalLicesnse`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Applications"],
+    }),
+    getRenewlicense: builder.query({
+      query: () => "/api/Applications/GetAllRenewLicenseApps",
+      providesTags: ["Applications"],
+    }),
+    acceptRenewLicense: builder.mutation({
+      query: ({ data }) => ({
+        url: `/Api/Licenses/RenewLicense`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Applications"],
+    }),
+    replaceForDamagedLicense: builder.mutation({
+      query: ({ data }) => ({
+        url: `/Api/Licenses/ReplaceForDamagedLicense`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Applications"],
+    }),
+    replaceForLostLicense: builder.mutation({
+      query: ({ data }) => ({
+        url: `/Api/Licenses/ReplaceForLostLicense`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Applications"],
+    }),
+    detainLicense: builder.mutation({
+      query: ({ data }) => ({
+        url: `/Api/Licenses/DetainLicense`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: ["Applications"],
+    }),
   }),
 });
 
@@ -56,5 +100,12 @@ export const {
   useAcceptApplicationMutation,
   useRejectApplicationMutation,
   useDeleteApplicationMutation,
-  useCreateLicenseMutation
+  useCreateLicenseMutation,
+
+  useCreateLicenseInternationalMutation,
+  useGetRenewlicenseQuery,
+  useAcceptRenewLicenseMutation,
+  useReplaceForDamagedLicenseMutation,
+  useReplaceForLostLicenseMutation,
+  useDetainLicenseMutation,
 } = ApplicationsApiSlice;

@@ -3,7 +3,15 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
-import { useCreateLicenseMutation } from "@/app/api/ApiSlice/Applications";
+import {
+  useAcceptRenewLicenseMutation,
+  useCreateLicenseInternationalMutation,
+  useCreateLicenseMutation,
+  useDetainLicenseMutation,
+  useReplaceForDamagedLicenseMutation,
+  useReplaceForLostLicenseMutation,
+} from "@/app/api/ApiSlice/Applications";
+
 interface TestFormData {
   notes: string;
 }
@@ -12,14 +20,29 @@ const CreateLicenaceForm = ({
   appId,
   paidFees,
   nationalNo,
+  appType,
   setIsOpen,
 }: {
   appId: number;
   paidFees: number;
   nationalNo: string;
+  appType:
+    | "New International Driving License"
+    | "New Local Driving License Service"
+    | "Replacement for a Damaged Driving License"
+    | "Replacement for a Lost Driving License"
+    | "Renew Driving License Service"
+    | "Release Detained Driving License";
+
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [createLicense, { isLoading }] = useCreateLicenseMutation();
+  const [createInternational, { isLoading: isLoadingInternational }] =
+    useCreateLicenseInternationalMutation();
+  const [acceptRenewLicense] = useAcceptRenewLicenseMutation();
+  const [replaceForDamagedLicense] = useReplaceForDamagedLicenseMutation();
+  const [replaceForLostLicense] = useReplaceForLostLicenseMutation();
+  const [detainLicense] = useDetainLicenseMutation();
   const {
     register,
     handleSubmit,
@@ -34,14 +57,48 @@ const CreateLicenaceForm = ({
   });
 
   const onSubmit = async (data: TestFormData) => {
-    const finalData = {
-      ...data,
-      nationalNo: nationalNo,
-      appId: appId,
-      paidFees: paidFees,
-    };
+    let finalData = {};
+    if (
+      appType === "New International Driving License" ||
+      appType === "New Local Driving License Service"
+    ) {
+      finalData = {
+        ...data,
+        nationalNo: nationalNo,
+        appId: appId,
+        paidFees: paidFees,
+      };
+    } else if (
+      appType === "Replacement for a Lost Driving License" ||
+      appType === "Replacement for a Damaged Driving License" ||
+      appType === "Renew Driving License Service"
+    ) {
+      finalData = {
+        ...data,
+        applicationId: appId,
+        paidFees: paidFees,
+      };
+    } else {
+      finalData = {
+        ...data,
+        licenseId: appId,
+        
+      };
+    }
     try {
-      await createLicense({ data: finalData }).unwrap();
+      if (appType === "New International Driving License") {
+        await createInternational({ data: finalData }).unwrap();
+      } else if (appType === "New Local Driving License Service") {
+        await createLicense({ data: finalData }).unwrap();
+      } else if (appType === "Renew Driving License Service") {
+        await acceptRenewLicense({ data: finalData }).unwrap();
+      } else if (appType === "Replacement for a Damaged Driving License") {
+        await replaceForDamagedLicense({ data: finalData }).unwrap();
+      } else if (appType === "Replacement for a Lost Driving License") {
+        await replaceForLostLicense({ data: finalData }).unwrap();
+      } else {
+        await detainLicense({ data: finalData }).unwrap();
+      }
       toast.success("تم قبول الاختبار بنجاح!");
       setIsOpen(false);
       reset();
@@ -72,7 +129,7 @@ const CreateLicenaceForm = ({
         </div>
 
         {/* زر الإرسال */}
-        <Button type="submit" disabled={isLoading}>
+        <Button type="submit" disabled={isLoading || isLoadingInternational}>
           {isLoading ? "Submitting..." : "Submit"}
         </Button>
       </form>

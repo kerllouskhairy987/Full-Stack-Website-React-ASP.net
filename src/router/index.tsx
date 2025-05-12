@@ -28,6 +28,7 @@ import TestsPage from "@/pages/user/TestsPage";
 import AppointmentPage from "@/pages/user/AppointmentPage";
 import TestPage from "@/components/Admin/Tests/TestPage";
 import DriversPage from "@/components/Admin/Drivers/DriversPage";
+import RenewLicense from "@/components/Admin/RenewLicense/RenewLicense";
 
 const isAuthenticated = false;
 
@@ -124,6 +125,17 @@ const router = createBrowserRouter(
               redirectPath={`/login`}
             >
               <DriversPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="renew-license"
+          element={
+            <ProtectedRoute
+              isAllowed={!isAuthenticated}
+              redirectPath={`/login`}
+            >
+              <RenewLicense />
             </ProtectedRoute>
           }
         />
