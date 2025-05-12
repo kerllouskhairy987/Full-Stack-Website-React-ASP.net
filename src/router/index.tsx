@@ -27,6 +27,7 @@ import UserInfo from "@/pages/user/UserInfo";
 import TestsPage from "@/pages/user/TestsPage";
 import AppointmentPage from "@/pages/user/AppointmentPage";
 import TestPage from "@/components/Admin/Tests/TestPage";
+import DriversPage from "@/components/Admin/Drivers/DriversPage";
 
 const isAuthenticated = false;
 
@@ -112,6 +113,17 @@ const router = createBrowserRouter(
               redirectPath={`/login`}
             >
               <TestPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="drivers"
+          element={
+            <ProtectedRoute
+              isAllowed={!isAuthenticated}
+              redirectPath={`/login`}
+            >
+              <DriversPage />
             </ProtectedRoute>
           }
         />

@@ -45,9 +45,6 @@ const UserTable = () => {
                   </span>
                 </td>
                 <td className="px-4 py-2 space-x-2 flex gap-2">
-                  <Button type="button" variant={"default"}>
-                    Edit
-                  </Button>
                   <Button type="button" variant={"outline"}>
                     Delete
                   </Button>

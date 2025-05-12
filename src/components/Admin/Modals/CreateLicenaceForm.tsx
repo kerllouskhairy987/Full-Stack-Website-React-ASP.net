@@ -1,46 +1,47 @@
 import { useForm } from "react-hook-form";
-import { object, boolean, string } from "yup";
+import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAcceptTestMutation } from "@/app/api/ApiSlice/TestsApiSlice";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
-
+import { useCreateLicenseMutation } from "@/app/api/ApiSlice/Applications";
 interface TestFormData {
-  testResult: boolean;
   notes: string;
 }
 
-const schema = object({
-  testResult: boolean().required("نتيجة الاختبار مطلوبة"),
-  notes: string().required("الملاحظات مطلوبة"),
-});
-
-const AcceptTestForm = ({
-  testId,
+const CreateLicenaceForm = ({
+  appId,
+  paidFees,
+  nationalNo,
   setIsOpen,
 }: {
-  testId: number;
+  appId: number;
+  paidFees: number;
+  nationalNo: string;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  console.log(testId);
+  const [createLicense, { isLoading }] = useCreateLicenseMutation();
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm<TestFormData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      object({
+        notes: string().required("الملاحظات مطلوبة"),
+      })
+    ),
   });
-
-  const [acceptTest, { isLoading }] = useAcceptTestMutation();
 
   const onSubmit = async (data: TestFormData) => {
     const finalData = {
       ...data,
-      testAppointmentId: testId,
+      nationalNo: nationalNo,
+      appId: appId,
+      paidFees: paidFees,
     };
     try {
-      await acceptTest({ data: finalData }).unwrap();
+      await createLicense({ data: finalData }).unwrap();
       toast.success("تم قبول الاختبار بنجاح!");
       setIsOpen(false);
       reset();
@@ -57,22 +58,6 @@ const AcceptTestForm = ({
   return (
     <div className="bg-background rounded-lg ">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* النتيجة */}
-        <div>
-          <label className="block mb-1 font-medium">Did Pass?</label>
-          <select
-            {...register("testResult")}
-            className="w-full border p-2 rounded bg-background"
-          >
-            <option value="">Select...</option>
-            <option value="true">Passed</option>
-            <option value="false">Failed</option>
-          </select>
-          {errors.testResult && (
-            <p className="text-red-500 text-sm">{errors.testResult.message}</p>
-          )}
-        </div>
-
         {/* ملاحظات */}
         <div>
           <label className="block mb-1 font-medium">Notes</label>
@@ -95,4 +80,4 @@ const AcceptTestForm = ({
   );
 };
 
-export default AcceptTestForm;
+export default CreateLicenaceForm;

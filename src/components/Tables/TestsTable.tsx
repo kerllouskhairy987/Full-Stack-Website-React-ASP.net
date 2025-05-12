@@ -38,13 +38,13 @@ const AppointmentTable: React.FC<Props> = ({ data }) => {
                 {new Date(appointment.appointmentDate).toLocaleString()}
               </td>
               <td className="px-4 py-2 border">{appointment.paidFee} $</td>
-              <td className="px-4 py-2 border">
+              <td className="px-4 py-2 border ">
                 {appointment.isLooked ? (
                   "yes"
                 ) : (
                   <Button
                     size="sm"
-                    className="text-center"
+                    className="text-center m-auto"
                     type="button"
                     onClick={() => {
                       setIsOpen(true);

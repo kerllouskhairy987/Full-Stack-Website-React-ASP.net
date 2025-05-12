@@ -1,13 +1,13 @@
-import { Trash } from "lucide-react";
 import { Button } from "../ui/Button";
 import {
   useAcceptApplicationMutation,
   useRejectApplicationMutation,
-  useDeleteApplicationMutation,
 } from "@/app/api/ApiSlice/Applications";
 import toast from "react-hot-toast";
 import { IappStatus } from "@/types";
 import { useState } from "react";
+import Modal from "../ui/Modal";
+import CreateLicenaceForm from "../Admin/Modals/CreateLicenaceForm";
 
 interface DrivingLicenseApplication {
   appId: number;
@@ -29,10 +29,13 @@ const ApplicationsTable = ({
   const [loadingStates, setLoadingStates] = useState<
     Record<number, "accept" | "reject" | "delete" | null>
   >({});
+  const [isOpen, setIsOpen] = useState(false);
+  // const [testAppointmentId, setTestAppointmentId] = useState(0);
+  const [ApllicationSelection, setApllicationSelection] =
+    useState<DrivingLicenseApplication>();
 
   const [acceptApplication] = useAcceptApplicationMutation();
   const [rejectApplication] = useRejectApplicationMutation();
-  const [deleteApplication] = useDeleteApplicationMutation();
 
   const handleAccept = async (id: number) => {
     try {
@@ -76,27 +79,29 @@ const ApplicationsTable = ({
     }
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      setLoadingStates((prev) => ({ ...prev, [id]: "delete" }));
-      await deleteApplication(id).unwrap();
-      toast.success("Successfully Deleted!", {
-        duration: 1500,
-        position: "bottom-center",
-        style: {
-          backgroundColor: "red",
-          color: "white",
-          width: "fit-content",
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to Delete!");
-    } finally {
-      setLoadingStates((prev) => ({ ...prev, [id]: null }));
-    }
-  };
+  // const handleDelete = async (id: number) => {
 
+  //   try {
+  //     setLoadingStates((prev) => ({ ...prev, [id]: "delete" }));
+  //     await deleteApplication(id).unwrap();
+  //     toast.success("Successfully Deleted!", {
+  //       duration: 1500,
+  //       position: "bottom-center",
+  //       style: {
+  //         backgroundColor: "red",
+  //         color: "white",
+  //         width: "fit-content",
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     toast.error("Failed to Delete!");
+  //   } finally {
+  //     setLoadingStates((prev) => ({ ...prev, [id]: null }));
+  //   }
+  // };
+
+  // const handleCreateLicenses = () => {};
   const renderStatus = (status: string) => {
     switch (status) {
       case "Pending":
@@ -160,21 +165,35 @@ const ApplicationsTable = ({
                       </Button>
                     </div>
                   )}
-                  <Button
-                    onClick={() => handleDelete(app.appId)}
-                    className="bg-red-600 hover:bg-red-700"
-                  >
-                    <Trash className="mr-2" />
-                    {loadingStates[app.appId] === "delete"
-                      ? "Deleting..."
-                      : "Delete"}
-                  </Button>
+                  {app.appStatus === "Approved" ? (
+                    <Button
+                      onClick={() => {
+                        // handleCreateLicenses(app.appId);
+                        setIsOpen(true);
+                        // setTestAppointmentId(app.appId);
+                        setApllicationSelection(app);
+                      }}
+                      className="bg-red-600 hover:bg-red-700"
+                    >
+                      {loadingStates[app.appId] === "delete"
+                        ? "Creating Licenses..."
+                        : "Create Licenses"}
+                    </Button>
+                  ) : null}
                 </div>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Modal title="Look" isOpen={isOpen} closeModal={() => setIsOpen(false)}>
+        <CreateLicenaceForm
+          setIsOpen={setIsOpen}
+          appId={ApllicationSelection?.appId || 0}
+          nationalNo={ApllicationSelection?.nationalNumber || ""}
+          paidFees={ApllicationSelection?.appFee || 0}
+        />
+      </Modal>
     </div>
   );
 };

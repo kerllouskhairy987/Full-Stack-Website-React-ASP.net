@@ -40,6 +40,14 @@ export const ApplicationsApiSlice = createApi({
       }),
       invalidatesTags: ["Applications"],
     }),
+    createLicense : builder.mutation({
+      query: ({data}) => ({
+        url: `/Api/Licenses/IssueLicenseFirstTime`,
+        method: "POST",
+        body: data
+      }),
+      invalidatesTags: ["Applications"],
+    })
   }),
 });
 
@@ -48,4 +56,5 @@ export const {
   useAcceptApplicationMutation,
   useRejectApplicationMutation,
   useDeleteApplicationMutation,
+  useCreateLicenseMutation
 } = ApplicationsApiSlice;
