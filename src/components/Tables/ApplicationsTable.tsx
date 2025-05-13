@@ -60,9 +60,13 @@ const ApplicationsTable = ({
           width: "fit-content",
         },
       });
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to Accept!");
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "data" in error) {
+        const err = error as { data?: { errors?: string } };
+        toast.error(err.data?.errors || "حدث خطأ غير متوقع");
+      } else {
+        toast.error("حدث خطأ غير متوقع");
+      }
     } finally {
       setLoadingStates((prev) => ({ ...prev, [id]: null }));
     }
@@ -81,9 +85,13 @@ const ApplicationsTable = ({
           width: "fit-content",
         },
       });
-    } catch (error) {
-      console.log(error);
-      toast.error("Failed to Reject!");
+    }  catch (error: unknown) {
+      if (error && typeof error === "object" && "data" in error) {
+        const err = error as { data?: { errors?: string } };
+        toast.error(err.data?.errors || "حدث خطأ غير متوقع");
+      } else {
+        toast.error("حدث خطأ غير متوقع");
+      }
     } finally {
       setLoadingStates((prev) => ({ ...prev, [id]: null }));
     }

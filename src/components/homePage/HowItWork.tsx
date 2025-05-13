@@ -35,7 +35,7 @@ const HowItWork = () => {
                     </div>
                 </div>
 
-                <div className="h-full grow bg-red-500">
+                <div className="h-full grow bg-red-500/50">
                     video how to use this website
                     <video src="/"></video>
                 </div>

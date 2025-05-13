@@ -46,9 +46,13 @@ const ApplicantsTable = () => {
           width: "fit-content",
         },
       });
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to Delete!");
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "data" in error) {
+        const err = error as { data?: { errors?: string } };
+        toast.error(err.data?.errors || "حدث خطأ غير متوقع");
+      } else {
+        toast.error("حدث خطأ غير متوقع");
+      }
     } finally {
       setDeletingIds((prev) => prev.filter((item) => item !== id)); // إزالة ID من حالة الحذف
     }
@@ -76,7 +80,7 @@ const ApplicantsTable = () => {
   };
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto p-4 text-nowrap" >
       <h1 className="text-2xl font-bold mb-6">Applicants Table</h1>
       <div>
         <InputField

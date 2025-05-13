@@ -61,19 +61,23 @@ const RenewLicenseTable = ({ applications }: { applications: License[] }) => {
                   <td className="px-4 py-2">${app.paidFees}</td>
                   <td className="px-4 py-2">{app.isDetained ? "Yes" : "No"}</td>
                   <td className="px-4 py-2">
-                    <Button type="button" onClick={() => setIsOpen(true)}>Detained</Button>
+                    <Button type="button" onClick={() => setIsOpen(true)}>
+                      Detained
+                    </Button>
                   </td>
-                  <Modal
-                    isOpen={isOpen}
-                    closeModal={() => setIsOpen(false)}
-                    title="Detained"
-                  >
-                    <Detained
-                      licenseId={app.licenseId}
-                      detainedDate={app.issueDate}
-                      releasedDate={app.expirationDate}
-                    />
-                  </Modal>
+                  <td>
+                    <Modal
+                      isOpen={isOpen}
+                      closeModal={() => setIsOpen(false)}
+                      title="Detained"
+                    >
+                      <Detained
+                        licenseId={app.licenseId}
+                        detainedDate={app.issueDate}
+                        releasedDate={app.expirationDate}
+                      />
+                    </Modal>
+                  </td>
                 </tr>
               ))}
             </tbody>

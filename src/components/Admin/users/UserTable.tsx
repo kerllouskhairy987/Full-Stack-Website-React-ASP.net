@@ -1,7 +1,6 @@
 // import Button from "../../ui/Button";
 
 import { useGetAllUsersQuery } from "@/app/api/ApiUsers/ApiUserSlice";
-import { Button } from "@/components/ui/Button";
 interface User {
   id: number;
   email: string;
@@ -24,7 +23,6 @@ const UserTable = () => {
               <th className="px-4 py-2 text-left">Email</th>
               <th className="px-4 py-2 text-left">Phone</th>
               <th className="px-4 py-2 text-left">Status</th>
-              <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -44,11 +42,7 @@ const UserTable = () => {
                     {user.isActive === true ? "Active" : "Inactive"}
                   </span>
                 </td>
-                <td className="px-4 py-2 space-x-2 flex gap-2">
-                  <Button type="button" variant={"outline"}>
-                    Delete
-                  </Button>
-                </td>
+   
               </tr>
             ))}
           </tbody>

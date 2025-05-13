@@ -5,5 +5,5 @@ export default function UsersPage() {
     <div>
       <UserTable />
     </div>
-  )
+  );
 }

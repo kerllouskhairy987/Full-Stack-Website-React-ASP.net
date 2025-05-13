@@ -11,8 +11,8 @@ interface TestFormData {
 }
 
 const schema = object({
-  testResult: boolean().required("نتيجة الاختبار مطلوبة"),
-  notes: string().required("الملاحظات مطلوبة"),
+  testResult: boolean().required("The test result is required"),
+  notes: string().required("Notes are required"),
 });
 
 const AcceptTestForm = ({
@@ -41,7 +41,7 @@ const AcceptTestForm = ({
     };
     try {
       await acceptTest({ data: finalData }).unwrap();
-      toast.success("تم قبول الاختبار بنجاح!");
+      toast.success("The test has been accepted successfully!");
       setIsOpen(false);
       reset();
     } catch (error: unknown) {

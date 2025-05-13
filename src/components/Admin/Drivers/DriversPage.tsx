@@ -16,7 +16,7 @@ export default function DriversPage() {
 
   return (
     <div className="p-4">
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto text-nowrap">
         <table className="min-w-full table-auto border-collapse">
           <thead className="bg-gray-800 text-white">
             <tr>

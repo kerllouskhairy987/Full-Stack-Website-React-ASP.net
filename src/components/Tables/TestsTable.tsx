@@ -14,7 +14,7 @@ const AppointmentTable: React.FC<Props> = ({ data }) => {
   console.log(data);
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto p-4 text-nowrap">
       <table className="min-w-full border border-gray-300 rounded shadow">
         <thead className="bg-gray-800 text-white">
           <tr>
