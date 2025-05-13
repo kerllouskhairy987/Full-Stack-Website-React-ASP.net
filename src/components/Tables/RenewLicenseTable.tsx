@@ -1,7 +1,6 @@
 import React from "react";
 import Modal from "../ui/Modal";
 import Detained from "../Admin/Modals/Detained";
-import Button from "../Button";
 
 interface License {
   licenseId: number;
@@ -36,7 +35,7 @@ const RenewLicenseTable = ({ applications }: { applications: License[] }) => {
                 <th className="px-4 py-2 text-left">Status</th>
                 <th className="px-4 py-2 text-left">Fee</th>
                 <th className="px-4 py-2 text-left">Detained?</th>
-                <th className="px-4 py-2 text-left">Actions</th>
+                {/* <th className="px-4 py-2 text-left">Actions</th> */}
               </tr>
             </thead>
             <tbody>
@@ -61,9 +60,9 @@ const RenewLicenseTable = ({ applications }: { applications: License[] }) => {
                   <td className="px-4 py-2">${app.paidFees}</td>
                   <td className="px-4 py-2">{app.isDetained ? "Yes" : "No"}</td>
                   <td className="px-4 py-2">
-                    <Button type="button" onClick={() => setIsOpen(true)}>
+                    {/* <Button type="button" onClick={() => setIsOpen(true)}>
                       Detained
-                    </Button>
+                    </Button> */}
                   </td>
                   <td>
                     <Modal

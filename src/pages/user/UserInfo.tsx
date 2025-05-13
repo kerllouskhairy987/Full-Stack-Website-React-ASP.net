@@ -78,7 +78,7 @@ const UserInfo = () => {
     const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            setImageFile(file);
+            setImageFile(file); 
             const reader = new FileReader();
             reader.onload = (e: ProgressEvent<FileReader>) => {
                 const imageUrl = e.target?.result as string;

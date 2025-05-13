@@ -46,7 +46,7 @@ const AppointmentPage = () => {
             console.log("response", response)
             if (!response) return;
             AlertSuccess({
-                title: `Result: ${response?.data?.value?.result}` || "No result available",
+                title: `Result: ${response?.data?.value?.result ? "Passed" : "Failed"}` || "No result available",
                 html: `Notes: ${response?.data?.value?.notes}` || "No notes available",
             })
 

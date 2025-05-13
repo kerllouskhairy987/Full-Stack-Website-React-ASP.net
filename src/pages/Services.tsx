@@ -4,7 +4,7 @@ import Button from "../components/Button"
 import { Link } from "react-router"
 import RenewLicense from "@/components/RenewLicense"
 import LostLicense from "@/components/LostLicense"
-import ReleaseLicense from "@/components/ReleaseLicense"
+// import ReleaseLicense from "@/components/ReleaseLicense"
 import DamagedLicense from "@/components/DamagedLicense"
 
 const Services = () => {
@@ -49,8 +49,8 @@ const Services = () => {
             <LostLicense />
             <hr className="mt-5 " />
             {/* Apply For release License */}
-            <ReleaseLicense />
-            <hr className="mt-5 " />
+            {/* <ReleaseLicense /> */}
+            {/* <hr className="mt-5 " /> */}
             {/* Apply For Damaged License */}
             <DamagedLicense />
         </div>
