@@ -6,6 +6,7 @@ import { ModeToggle } from "./mode-toggle";
 import Profile from "./Profile";
 import CustomHook from "@/hooks/CustomHook";
 import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
+import LOGO from "@/assets/logo-transparent.png";
 
 const Navbar = () => {
   const [openList, setOpenList] = useState(false);
@@ -53,7 +54,9 @@ const Navbar = () => {
     <nav className="bg-[#171918] shadow-2xl sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between p-2">
         <NavLink to="/">
-          <h1 className="font-bold text-3xl text-white hover:text-blue-300 transition-colors">DVLD</h1>
+          <h1 className="font-bold text-3xl text-white hover:text-blue-300 transition-colors">
+            <img src={LOGO} className="w-12" alt="logo DVLD Project" />
+          </h1>
         </NavLink>
         <div className="flex items-center">
           <ul className="hidden sm:flex items-center gap-5 text-white">

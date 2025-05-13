@@ -7,6 +7,7 @@ interface InputFieldProps {
   label?: string;
   errorMessage?: string;
   className?: string;
+  readonly?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   Icon?: React.ComponentType<{ className?: string }>;
 }

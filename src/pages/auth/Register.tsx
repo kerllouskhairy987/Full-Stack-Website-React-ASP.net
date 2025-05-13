@@ -8,14 +8,14 @@ import InputField from "../../components/ui/InputField";
 import { registerSchema } from "../../validation/auth";
 import { IErrorResponse, RegisterFormValues } from "../../interfaces";
 import { REGISTER_FORM } from "@/data";
-import { FaRegEdit } from "react-icons/fa";
+// import { FaRegEdit } from "react-icons/fa";
 import axiosInstance from "@/config/axios.config";
 import CountryDropDown, { GenderDropDown } from "@/components/ui/DropDown";
 import toast from "react-hot-toast";
 import { AxiosError } from "axios";
 
 const Register = () => {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  // const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<number | null>(null);
   const [selectedGender, setSelectedGender] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -79,16 +79,16 @@ const Register = () => {
   };
 
 
-  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        setImageUrl(e.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e: ProgressEvent<FileReader>) => {
+  //       setImageUrl(e.target?.result as string);
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   // Renders
   const renderRegisterForm = REGISTER_FORM.map(({ label, name, id, type, placeholder, validation }, index) => (
@@ -115,14 +115,14 @@ const Register = () => {
             Sign up
           </h2>
           <div className="space-y-2">
-            <label htmlFor="image" className={`block w-[200px] h-[200px] border overflow-hidden mx-auto rounded-[50%!important] relative shadow-md`}>
+            {/* <label htmlFor="image" className={`block w-[200px] h-[200px] border overflow-hidden mx-auto rounded-[50%!important] relative shadow-md`}>
               {
                 imageUrl ? <img src={imageUrl} className="object-fit absolute rounded-full" alt="" /> :
                   <img src={"https://avatar.iran.liara.run/public/8"} className="object-fit absolute rounded-full" alt="" />
               }
               <FaRegEdit className="absolute text-white text-2xl cursor-pointer bottom-6 right-[30px] z-10" />
               <input id="image" type="file" accept="image/*" className="w-[200px!important] bg-transparent h-[200px!important] block rounded-[50%!important] opacity-0 border mx-auto cursor-pointer" onChange={handleImageUpload} />
-            </label>
+            </label> */}
 
             {renderRegisterForm}
             <CountryDropDown setSelectedCountry={setSelectedCountry} />

@@ -1,4 +1,4 @@
-import { TNameInputLogin, TNameInputRegister } from "@/types";
+import { TNameInputLogin, TNameInputRegister, TNameInputUpdateUser } from "@/types";
 
 // Interface for data of input register
 export interface IRegisterInput {
@@ -62,12 +62,15 @@ export interface IErrorResponse {
       data?: {
         messages?: string[];
         errors?: string[];
-      };
-    };
-  };
+        message?: string;
+      }
+    }
+  }
   messages?: string[];
+  message?: string;
   errors?: string[];
 }
+
 export interface LoginFormValues {
   email: string;
   password: string;
@@ -101,7 +104,7 @@ export interface IDataLicense {
 // Interface for data of input update user
 export interface IUpdateUserInput {
   label: string;
-  name: TNameInputRegister;
+  name: TNameInputUpdateUser;
   id: string;
   placeholder: string;
   type: string;
@@ -121,4 +124,17 @@ export interface Tests {
   testType: "VisionTest" | string;
   applicantName: string;
   applicantNationalNo: string;
+
+}
+
+// Interface for Input Update User
+export interface IUpdateUserFormValues {
+  nationalNo: string;
+  fname: string;
+  sname: string;
+  tname: string;
+  lname: string;
+  phonenumber: string;
+  birthDate: string;
+  address: string;
 }

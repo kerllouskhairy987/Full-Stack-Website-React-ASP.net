@@ -84,3 +84,39 @@ export const resetPasswordSchema = yup
     )
   })
   .required()
+
+// Update User Schema Validation
+export const UpdateUserSchema = yup.object().shape({
+
+  nationalNo: yup
+    .string()
+    .matches(/^\d{14}$/, "National number must be 14 digits")
+    .required("National number is required"),
+
+  fname: yup.string().required("First name is required"),
+  sname: yup.string().required("second name is required"),
+  tname: yup.string().required("third name is required"),
+  lname: yup.string().required("last name is required"),
+
+
+  phonenumber: yup
+    .string()
+    .matches(/^\d{10,15}$/, "Mobile number must be between 10 and 15 digits")
+    .required("Mobile number is required"),
+
+  birthDate: yup
+    .string()
+    .required("Birthdate is required")
+    .test(
+      "is-valid-date",
+      "Birthdate must be a valid date",
+      (value) => !isNaN(new Date(value || "").getTime())
+    )
+    .test(
+      "is-not-in-future",
+      "Birthdate cannot be in the future",
+      (value) => new Date(value || "") <= new Date()
+    ),
+
+  address: yup.string().required("address location is required"),
+});

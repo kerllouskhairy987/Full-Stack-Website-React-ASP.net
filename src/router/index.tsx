@@ -29,6 +29,8 @@ import AppointmentPage from "@/pages/user/AppointmentPage";
 import TestPage from "@/components/Admin/Tests/TestPage";
 import DriversPage from "@/components/Admin/Drivers/DriversPage";
 import RenewLicense from "@/components/Admin/RenewLicense/RenewLicense";
+import LicensePage from "@/pages/user/LicensePage";
+import WhyUsPage from "@/pages/WhyUsPage";
 
 const isAuthenticated = false;
 
@@ -55,6 +57,8 @@ const router = createBrowserRouter(
             </ProtectedRoute>
           }
         />
+
+        <Route path="why-us" element={ <WhyUsPage /> } />
 
         <Route path="login" element={
           <ProtectedRoute isAllowed={!userIdFromLocalStorage} redirectPath={`/`}>
@@ -150,6 +154,7 @@ const router = createBrowserRouter(
         <Route index element={<UserInfo />} errorElement={<ErrorHandler />}></Route>
         <Route path="applications" element={<UserApplicationPage />} errorElement={<ErrorHandler />}></Route>
         <Route path="appointments" element={<AppointmentPage />} errorElement={<ErrorHandler />}></Route>
+        <Route path="userLicense" element={<LicensePage />} errorElement={<ErrorHandler />}></Route>
 
         <Route path="applications/tests" element={<TestsPage />} errorElement={<ErrorHandler />}></Route>
       </Route>

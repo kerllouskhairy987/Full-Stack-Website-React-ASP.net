@@ -353,16 +353,4 @@ export const UPDATE_USER_FORM: IUpdateUserInput[] = [
         }
     },
 
-    {
-        label: "Email",
-        name: "email",
-        id: "email",
-        placeholder: "email",
-        type: "email",
-        validation: {
-            required: true,
-            pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/
-        }
-    },
-
 ]

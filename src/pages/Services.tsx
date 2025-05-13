@@ -2,6 +2,10 @@ import local_img from "../assets/local-.jpeg"
 import international_img from "../assets/international-.jpeg"
 import Button from "../components/Button"
 import { Link } from "react-router"
+import RenewLicense from "@/components/RenewLicense"
+import LostLicense from "@/components/LostLicense"
+import ReleaseLicense from "@/components/ReleaseLicense"
+import DamagedLicense from "@/components/DamagedLicense"
 
 const Services = () => {
     return (
@@ -37,6 +41,18 @@ const Services = () => {
                 </div>
             </div>
 
+            <hr className="mt-5 " />
+            {/* Apply For New License */}
+            <RenewLicense />
+            <hr className="mt-5 " />
+            {/* Apply For Lost License */}
+            <LostLicense />
+            <hr className="mt-5 " />
+            {/* Apply For release License */}
+            <ReleaseLicense />
+            <hr className="mt-5 " />
+            {/* Apply For Damaged License */}
+            <DamagedLicense />
         </div>
     )
 }

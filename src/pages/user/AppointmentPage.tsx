@@ -1,8 +1,13 @@
+import Button from "@/components/Button"
 import { SkeletonUserTests } from "@/components/Skeleton "
+import axiosInstance from "@/config/axios.config"
 import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global"
 import CustomHook from "@/hooks/CustomHook"
+import { AlertSuccess } from "@/lib"
+import { useState } from "react"
 
 const AppointmentPage = () => {
+    const [isLoadingShowResult, setIsLoadingShowResult] = useState(false)
     const config = {
         headers: {
             Authorization: `Bearer ${tokenFromLocalStorage}`
@@ -15,6 +20,7 @@ const AppointmentPage = () => {
         config
     })
 
+
     // fetch all appointments
     const applicantId = applicant?.value?.applicantId;
     console.log("applicantId ...................", applicantId)
@@ -24,6 +30,33 @@ const AppointmentPage = () => {
         config
     });
     const dataAllAppointments = data?.value;
+
+    // show result handler
+    const showResultHandler = async (appointmentId: number) => {
+        console.log("show result handler", appointmentId)
+        setIsLoadingShowResult(true)
+        try {
+            const response = await axiosInstance.get(
+                `Tests/GetTestResultByTestAppoinmentId/${appointmentId}`, {
+                headers: {
+                    Authorization: `Bearer ${tokenFromLocalStorage}`
+                }
+            })
+
+            console.log("response", response)
+            if (!response) return;
+            AlertSuccess({
+                title: `Result: ${response?.data?.value?.result}` || "No result available",
+                html: `Notes: ${response?.data?.value?.notes}` || "No notes available",
+            })
+
+        } catch (error) {
+            console.log("error", error)
+
+        } finally {
+            setIsLoadingShowResult(false)
+        }
+    }
 
     if (isLoading) return <SkeletonUserTests />
     return (
@@ -49,7 +82,15 @@ const AppointmentPage = () => {
                             <td className="px-4 py-2 whitespace-nowrap">{test.paidFee} EGP</td>
                             <td className="px-4 py-2 whitespace-nowrap">
                                 {test.isLooked ? (
-                                    <span className="text-green-600 font-semibold">Looked</span>
+                                    <div className="flex items-center justify-start gap-3">
+                                        <span className="text-green-600 font-semibold">Looked</span>
+                                        <Button type="button" className="py-1"
+                                            disabled={isLoadingShowResult}
+                                            onClick={() => showResultHandler(test.appointmentId)}
+                                        >
+                                            {isLoadingShowResult ? "View Result..." : "View Result"}
+                                        </Button>
+                                    </div>
                                 ) : (
                                     <span className="text-yellow-500 font-semibold">Pending</span>
                                 )}

@@ -1,4 +1,7 @@
+import axiosInstance from '@/config/axios.config'
 import { REGISTER_COUNTRIES, REGISTER_GENDER } from '@/data'
+import { tokenFromLocalStorage, userIdFromLocalStorage } from '@/global'
+import CustomHook from '@/hooks/CustomHook'
 import {
     Combobox,
     ComboboxButton,
@@ -10,7 +13,7 @@ import {
 } from '@headlessui/react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid'
 import clsx from 'clsx'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 type Person = {
     CountryId: number
@@ -23,7 +26,7 @@ interface IProps {
 }
 export default function CountryDropDown({ setSelectedCountry }: IProps) {
     const [query, setQuery] = useState<string>('')
-    const [selected, setSelected] = useState<Person>(people[1]!);
+    const [selected, setSelected] = useState<Person>(people[0]);
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     const filteredPeople =
@@ -38,6 +41,47 @@ export default function CountryDropDown({ setSelectedCountry }: IProps) {
         setSelectedCountry(value.CountryId)
         setIsOpen(false)
     }
+
+    // Get applicant id
+    const { data: applicant } = CustomHook({
+        queryKey: ["user_information__"],
+        url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}`,
+        config: {
+            headers: { Authorization: `Bearer ${tokenFromLocalStorage}` }
+        }
+    });
+
+    // Fetch User Profile Information
+    const applicantId = applicant?.value;
+    // Set default values
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!applicantId) return;
+
+            try {
+                const response = await axiosInstance.get(`Applicants/GetUserProfile/${applicantId}`, {
+                    headers: {
+                        Authorization: `Bearer ${tokenFromLocalStorage}`,
+                    }
+                });
+                console.log(".......>>>>>>>>>>>>", response);
+
+                const countryIdFromAPI = response?.data?.value?.countryId;
+                console.log("Fetched CountryId:", countryIdFromAPI);
+
+                const matchedCountry = people.find(p => p.CountryId === countryIdFromAPI);
+                if (matchedCountry) {
+                    setSelected(matchedCountry);
+                    setSelectedCountry(matchedCountry.CountryId);
+                }
+
+            } catch (error) {
+                console.error("Error fetching user data", error);
+            }
+        };
+
+        fetchUserData();
+    }, [applicantId]);
 
     return (
         <div className="w-full">
@@ -107,9 +151,9 @@ const gender: Gender[] = REGISTER_GENDER;
 interface IPropsGender {
     setSelectedGender: (value: number) => void;
 }
-export function GenderDropDown({setSelectedGender}: IPropsGender) {
+export function GenderDropDown({ setSelectedGender }: IPropsGender) {
     const [query, setQuery] = useState<string>('')
-    const [selected, setSelected] = useState<Gender>(gender[1]!);
+    const [selected, setSelected] = useState<Gender>(gender[0]);
     const [isOpen, setIsOpen] = useState(false)
 
     const filteredGender =
@@ -119,15 +163,57 @@ export function GenderDropDown({setSelectedGender}: IPropsGender) {
                 person.genderType.toLowerCase().includes(query.toLowerCase())
             )
 
+    // Get applicant id
+    const { data: applicant } = CustomHook({
+        queryKey: ["user_information_dropdown"],
+        url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}`,
+        config: {
+            headers: { Authorization: `Bearer ${tokenFromLocalStorage}` }
+        }
+    });
+
+    // Fetch User Profile Information
+    const applicantId = applicant?.value;
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!applicantId) return;
+
+            try {
+                const response = await axiosInstance.get(`Applicants/GetUserProfile/${applicantId}`, {
+                    headers: {
+                        Authorization: `Bearer ${tokenFromLocalStorage}`,
+                    }
+                });
+
+                const genderFromAPI = response?.data?.value?.gender;
+                console.log("Fetched Gender:", genderFromAPI);
+
+                const matchedGender = gender.find(g => g.gender === genderFromAPI);
+                console.log("Matched Gender:", matchedGender);
+                if (matchedGender) {
+                    setSelected(matchedGender);
+                    setSelectedGender(matchedGender.gender);
+                }
+
+            } catch (error) {
+                console.error("Error fetching user gender", error);
+            }
+        };
+
+        fetchUserData();
+    }, [applicantId]);
+
+
     return (
         <div className="w-full">
             <Field>
                 <Label>Gender:</Label>
                 <Combobox<Gender>
-                    value={selected ?? gender[0]}
+                    value={selected}
                     onChange={(value) => {
                         setSelected(value ?? gender[0])
-                        if(value) {
+                        if (value) {
                             setSelectedGender(value.gender)
                         }
                         setIsOpen(false)

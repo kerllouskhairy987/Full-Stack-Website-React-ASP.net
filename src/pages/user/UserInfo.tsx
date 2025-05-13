@@ -1,117 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import InputField from "../../components/ui/InputField";
-import { registerSchema } from "../../validation/auth";
-import { IErrorResponse, RegisterFormValues } from "../../interfaces";
+import { UpdateUserSchema } from "../../validation/auth";
+import { IUpdateUserFormValues } from "../../interfaces";
 import { UPDATE_USER_FORM } from "@/data";
 import { FaRegEdit } from "react-icons/fa";
 import axiosInstance from "@/config/axios.config";
 import CountryDropDown, { GenderDropDown } from "@/components/ui/DropDown";
-import toast from "react-hot-toast";
-import { AxiosError } from "axios";
 import CustomHook from "@/hooks/CustomHook";
 import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
+import { AlertError, AlertSuccess } from "@/lib";
 
 const UserInfo = () => {
     const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [selectedCountry, setSelectedCountry] = useState<number | null>(null);
     const [selectedGender, setSelectedGender] = useState<number | null>(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [isEditable, setIsEditable] = useState(false)
-
-    console.log("selectedGender ............", selectedGender)
-
-    const navigate = useNavigate();
+    const [imageFile, setImageFile] = useState<File | null>(null)
 
     // Handlers
-    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormValues>({
-        resolver: yupResolver(registerSchema),
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<IUpdateUserFormValues>({
+        resolver: yupResolver(UpdateUserSchema),
     });
 
-    const onSubmit: SubmitHandler<RegisterFormValues> = async (data) => {
-        console.log("Formatted Data:", data);
-        setIsLoading(true)
-
-        const formData = {
-            ...data,
-            countryId: selectedCountry,
-            gender: selectedGender
-        }
-
-        console.log("DATA ....", formData)
-
-        try {
-            const res = await axiosInstance.post("Account/Register", formData, {
-                timeout: 20000,
-            });
-            console.log("res FROM REGISTER FORM", res);
-            toast.success('Successfully Registered, will navigate to login!',
-                {
-                    duration: 1500,
-                    position: 'bottom-center',
-                    style: { backgroundColor: "green", color: "white", width: "fit-content" },
-                }
-            );
-            setIsLoading(true)
-            setTimeout(() => {
-                navigate("/login", { replace: true })
-            }, 2000)
-
-            console.log("response .....", data);
-
-        } catch (error) {
-            console.log(error);
-            const errorObj = error as AxiosError<IErrorResponse>
-            console.log("MY ERROR", errorObj)
-            console.log("strong error", errorObj.response?.data?.messages)
-            toast.error(`${errorObj.response?.data?.messages}`,
-                {
-                    duration: 1500,
-                    position: 'bottom-center',
-                    style: { backgroundColor: "red", color: "white", width: "fit-content" },
-                }
-            );
-
-        } finally {
-            setIsLoading(false)
-        }
-    };
-
-    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e: ProgressEvent<FileReader>) => {
-                setImageUrl(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
     // Get applicant id
-    const { data: applicant, isLoading: applicant_loading } = CustomHook({
+    const { data: applicant } = CustomHook({
         queryKey: ["user_information__"],
         url: `Applicants/GetApplicantIdByUserId/${userIdFromLocalStorage}`,
         config: {
             headers: { Authorization: `Bearer ${tokenFromLocalStorage}` }
         }
     });
-    console.log("data and isLoading", applicant?.value, applicant_loading)
 
     // Fetch User Profile Information
     const applicantId = applicant?.value;
-    const { data } = CustomHook({
-        queryKey: ["userProfile_information"],
-        url: `Applicants/GetUserProfile/${applicantId}`,
-        config: {
-            headers: {
-                Authorization: `Bearer ${tokenFromLocalStorage}`,
+
+    // Set default values
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!applicantId) return;
+
+            try {
+                const response = await axiosInstance.get(`Applicants/GetUserProfile/${applicantId}`, {
+                    headers: {
+                        Authorization: `Bearer ${tokenFromLocalStorage}`,
+                    }
+                });
+                reset({ ...response?.data?.value, birthDate: new Date(response?.data?.value?.birthDate).toISOString().split('T')[0] });
+                setImageUrl(response?.data?.value?.imageUrl);
+            } catch (error) {
+                console.error("Error fetching user data", error);
             }
-        }
-    })
-    console.log("data and isLoading", data)
+        };
+
+        fetchUserData();
+    }, [applicantId]);
+
 
     // Renders
     const renderRegisterForm = UPDATE_USER_FORM.map(({ label, name, id, type, placeholder, validation }, index) => (
@@ -123,19 +69,72 @@ const UserInfo = () => {
                 placeholder={placeholder}
                 {...register(name, validation)}
                 errorMessage={errors[name]?.message}
-            // value={name}
             />
         </div>
     ))
 
-    const handleButtonClick = () => {
-        console.log("selectedCountry")
-        setIsEditable(prev => prev = !prev);
-        console.log("isEditable", isEditable);
-    }
+
+    // Handle Image Upload
+    const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onload = (e: ProgressEvent<FileReader>) => {
+                const imageUrl = e.target?.result as string;
+                setImageUrl(imageUrl);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    // Submit Handler
+    const onSubmit: SubmitHandler<IUpdateUserFormValues> = async (data) => {
+        setIsLoading(true);
+
+        if (!imageFile) {
+            console.log("الصورة غير موجودة");
+            setIsLoading(false);
+            AlertError({ title: "Error", text: "Please upload an image" });
+            return;
+        }
+
+        try {
+            const formData = new FormData();
+            formData.append("Image", imageFile);
+
+            // /api/Applicants/UpdateUserProfile/{id}
+            const { data: updatedData } = await axiosInstance.put(`Applicants/UpdateUserProfile/${applicantId}`, formData, {
+                params: {
+                    NationalNo: data.nationalNo,
+                    Fname: data.fname,
+                    Sname: data.sname,
+                    Tname: data.tname,
+                    Lname: data.lname,
+                    CountryId: selectedCountry,
+                    Gender: selectedGender,
+                    BirthDate: data.birthDate,
+                    Address: data.address,
+                    PhoneNumber: data.phonenumber
+                },
+                headers: {
+                    Authorization: `Bearer ${tokenFromLocalStorage}`,
+                    "Content-Type": "multipart/form-data"
+                }
+            }
+            );
+
+            console.log("Updated Data:", updatedData);
+            AlertSuccess({ title: "Success", html: "Your profile has been updated successfully" })
+        } catch (error) {
+            console.error("user update Profile error", error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
-        <div className="flex flex-col md:flex-row mt-5 sm:mt-10"> {/* h-screen */}
+        <div className="flex flex-col md:flex-row mt-5 sm:mt-10">
             <div className="w-full mx-auto md:w-1/2 flex justify-center items-center px-3 py-1">
                 <form
                     onSubmit={handleSubmit(onSubmit)}
@@ -159,12 +158,55 @@ const UserInfo = () => {
                         <GenderDropDown setSelectedGender={setSelectedGender} />
 
                     </div>
-                    <Button onClick={handleButtonClick} type={isEditable ? "submit" : "button"} className="w-full" disabled={isLoading} isLoading={isLoading}>
-                        {isEditable ? isLoading ? "Updating..." : "submit" : "Update"}
-                    </Button>
+                    {/* <Button type="submit" disabled={isLoading} className="w-full"> {isLoading ? "Loading..." : "Submit"} </Button> */}
+                    <Button type="submit" className="w-full" disabled={isLoading}> {isLoading ? "loading..." : "Update"}</Button>
                 </form>
             </div>
         </div>
     );
 };
 export default UserInfo;
+
+
+/*
+
+const updatedData = {
+            ...data,
+            countryId: selectedCountry,
+            gender: selectedGender
+            Image: imageUrl,
+        }
+        
+        console.log("DATA ....>>>>>", updatedData)
+        
+        try {
+            const { data: updatedDataFetch } = await axiosInstance.put(`Applicants/UpdateUserProfile/${applicantId}`, updatedData, {
+                headers: {
+                    Authorization: `Bearer ${tokenFromLocalStorage}`
+                }
+            })
+            
+            console.log("updatedDataFetch .....", updatedDataFetch);
+        } catch (error) {
+            console.log(error);
+            
+        } finally {
+            setIsLoading(false)
+        }
+        
+                                {/* <div>
+                                    <label htmlFor="image">Upload Image</label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        id="image"
+                                        onChange={handleImageUpload}
+                                        className="block w-full mt-1"
+                                    />
+                                </div> */
+
+
+
+
+
+

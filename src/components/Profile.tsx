@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import CustomHook from "@/hooks/CustomHook";
-import { userIdFromLocalStorage } from "@/global";
+import { tokenFromLocalStorage, userIdFromLocalStorage } from "@/global";
 import { Link } from "react-router";
 
 const Profile = () => {
@@ -31,7 +31,7 @@ const Profile = () => {
     const { isLoading: isLoadingEmail, data: emailUser } = CustomHook({
         queryKey: ["user"], url: `Users/GetUser/${userIdFromLocalStorage}`, config: {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${tokenFromLocalStorage}`,
             }
         }
     })
@@ -39,10 +39,21 @@ const Profile = () => {
     const { isLoading: isLoadingUserName, data: nameUser } = CustomHook({
         queryKey: ["userName"], url: `Applicants/GetApplicantByUserId/${userIdFromLocalStorage}`, config: {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                Authorization: `Bearer ${tokenFromLocalStorage}`,
             }
         }
     })
+    const applicantId = nameUser?.value?.applicantId
+
+    // get image of user(imageUrl)
+    const { isLoading: isLoadingImageUrl, data: dataImageUrl } = CustomHook({
+        queryKey: ["userImageUrl"], url: `Applicants/GetUserProfile/${applicantId}`, config: {
+            headers: {
+                Authorization: `Bearer ${tokenFromLocalStorage}`
+            }
+        }
+    })
+    const prevImageUrl = dataImageUrl?.value?.imageUrl;
 
     // ** Actions
     useEffect(() => {
@@ -64,7 +75,7 @@ const Profile = () => {
                 onClick={handleProfile}
             >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full cursor-pointer" src={"https://avatar.iran.liara.run/public/8"} alt="user photo" />
+                <img className="w-8 h-8 rounded-full cursor-pointer" src={!isLoadingImageUrl ? prevImageUrl : "https://avatar.iran.liara.run/public/8"} alt="user photo" />
             </button>
 
             {isOpenProfile && <div id="dropdownAvatar" className="z-[10000] absolute left-1/2 -translate-x-1/2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">

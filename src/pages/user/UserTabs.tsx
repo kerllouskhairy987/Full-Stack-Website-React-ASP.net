@@ -23,6 +23,12 @@ const UserTabs = () => {
             href: "/user/appointments",
             exact: false,
         },
+        {
+            id: crypto.randomUUID(),
+            title: "Your License",
+            href: "/user/userLicense",
+            exact: false,
+        },
     ];
 
     const isActiveTab = (href: string, exact: boolean) => {

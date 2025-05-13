@@ -9,8 +9,7 @@ export const AlertError = ({ title, text }: AlertErrorProps) => {
     Swal.fire({
         icon: "error",
         title,
-        text,
-        // footer: '<a href="#">Why do I have this issue?</a>',
+        text
     });
 };
 
