@@ -75,7 +75,7 @@ const Profile = () => {
                 onClick={handleProfile}
             >
                 <span className="sr-only">Open user menu</span>
-                <img className="w-8 h-8 rounded-full cursor-pointer" src={!isLoadingImageUrl ? prevImageUrl : "https://avatar.iran.liara.run/public/8"} alt="user photo" />
+                <img className="w-8 h-8 rounded-full cursor-pointer" src={prevImageUrl && !isLoadingImageUrl ? prevImageUrl : "https://static.vecteezy.com/system/resources/previews/024/183/525/non_2x/avatar-of-a-man-portrait-of-a-young-guy-illustration-of-male-character-in-modern-color-style-vector.jpg"} alt="user photo" />
             </button>
 
             {isOpenProfile && <div id="dropdownAvatar" className="z-[10000] absolute left-1/2 -translate-x-1/2 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 dark:divide-gray-600">

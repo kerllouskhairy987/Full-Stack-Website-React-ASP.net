@@ -147,7 +147,7 @@ const UserInfo = () => {
                         <label htmlFor="image" className={`block w-[200px] h-[200px] border overflow-hidden mx-auto rounded-[50%!important] relative shadow-md`}>
                             {
                                 imageUrl ? <img src={imageUrl} className="object-fit absolute rounded-full" alt="" /> :
-                                    <img src={"https://avatar.iran.liara.run/public/8"} className="object-fit absolute rounded-full" alt="" />
+                                    <img src={"https://static.vecteezy.com/system/resources/previews/024/183/525/non_2x/avatar-of-a-man-portrait-of-a-young-guy-illustration-of-male-character-in-modern-color-style-vector.jpg"} className="object-fit absolute rounded-full" alt="" />
                             }
                             <FaRegEdit className="absolute text-white text-2xl cursor-pointer bottom-6 right-[30px] z-10" />
                             <input id="image" type="file" accept="image/*" className="w-[200px!important] bg-transparent h-[200px!important] block rounded-[50%!important] opacity-0 border mx-auto cursor-pointer" onChange={handleImageUpload} />

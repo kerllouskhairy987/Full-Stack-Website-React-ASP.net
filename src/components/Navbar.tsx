@@ -14,8 +14,7 @@ const Navbar = () => {
   const navItems = [
     { to: "/services", text: "Services" },
     { to: "/contact", text: "Contact" },
-    { to: "/why-us", text: "Why Us" },
-    // { to: "/admin", text: "Admin" }
+    { to: "/why-us", text: "Why Us" }
   ];
 
   const renderNavItems = (mobile = false) => (
