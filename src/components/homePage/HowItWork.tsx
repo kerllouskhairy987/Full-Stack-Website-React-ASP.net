@@ -2,6 +2,8 @@ import { MdAccountBox, MdMergeType } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import { TitleSec } from "../ui/WhyUsComponent";
 import { SiTaketwointeractivesoftware } from "react-icons/si";
+import bg_home from "../../assets/bg_home.jpg";
+
 
 const HowItWork = () => {
     return (
@@ -33,11 +35,6 @@ const HowItWork = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className="h-full grow bg-red-500/50">
-                    video how to use this website
-                    <video src="/"></video>
                 </div>
             </div>
 
